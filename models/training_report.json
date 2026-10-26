@@ -940,15 +940,15 @@
     "python": "3.11.9",
     "scikit_learn": "1.8.0",
     "spacy": "3.8.16",
-    "spacy_model": "core_web_sm-3.8.0",
+    "spacy_model": "en_core_web_sm-3.8.0",
     "pandas": "2.2.2",
     "numpy": "1.26.4"
   },
-  "trained_at": "2026-10-27 01:04:54",
-  "training_seconds": 4.15,
+  "trained_at": "2026-10-27 01:41:21",
+  "training_seconds": 10.68,
   "reload_check": {
     "identical_predictions": true,
     "max_probability_difference": 0.0,
-    "artifact_bytes": 76192
+    "artifact_bytes": 76194
   }
 }

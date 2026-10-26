@@ -34,8 +34,8 @@ with a:
     st.plotly_chart(charts.score_gauge(score), width="stretch", config=charts.CONFIG)
 with b:
     ui.section("How the indicator is calculated", "")
-    st.latex(r"\text{Indicator} = 100 \times \left(p_{\text{positive}} + 0.5 \times p_{\text{neutral}}\right)"
-             r"= 50\,p_{\text{positive}} + 50\,(1 - p_{\text{negative}})")
+    st.latex(r"\text{Indicator} = 100 \times \left(p_{\text{pos}} + 0.5\,p_{\text{neu}}\right)")
+    st.latex(r"= 50\,p_{\text{pos}} + 50\,(1 - p_{\text{neg}})")
     c = kpis["counts"]
     n = kpis["valid_reviews"]
     st.markdown(f"With **{c['positive']}** positive, **{c['neutral']}** neutral and **{c['negative']}** negative predictions out of "

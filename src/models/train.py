@@ -211,7 +211,7 @@ def train_and_evaluate(df: pd.DataFrame, cleaning_log: dict | None = None, rando
         "top_features": top_features,
         "classes": classes,
         "versions": {"python": platform.python_version(), "scikit_learn": sklearn.__version__,
-                     "spacy": spacy.__version__, "spacy_model": get_nlp().meta.get("name", "") + "-" + get_nlp().meta.get("version", ""),
+                     "spacy": spacy.__version__, "spacy_model": f"{get_nlp().meta.get('lang', 'en')}_{get_nlp().meta.get('name', '')}-{get_nlp().meta.get('version', '')}",
                      "pandas": pd.__version__, "numpy": np.__version__},
         "trained_at": time.strftime("%Y-%m-%d %H:%M:%S"),
         "training_seconds": round(time.time() - started, 2),

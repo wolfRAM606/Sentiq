@@ -68,7 +68,8 @@ def aspect_volume_bars(summary: pd.DataFrame) -> go.Figure:
     fig = go.Figure(go.Bar(y=df["aspect"], x=df["reviews"], orientation="h", marker_color=COLORS["ice"],
                            text=df["reviews"], textposition="outside", textfont=dict(color=COLORS["muted"]),
                            hovertemplate="%{y}: %{x} reviews<extra></extra>"))
-    fig.update_layout(xaxis_title="Reviews mentioning aspect", bargap=0.4)
+    fig.update_traces(cliponaxis=False)
+    fig.update_layout(xaxis=dict(title="Reviews mentioning aspect", range=[0, max(df["reviews"].max(), 1) * 1.18]), bargap=0.4)
     return _layout(fig, max(260, 30 * len(df) + 70))
 
 
@@ -125,7 +126,8 @@ def probability_bars(probs: dict) -> go.Figure:
                            marker_color=[SENTIMENT_COLORS[s] for s in labs], text=[f"{v:.0%}" for v in vals],
                            textposition="outside", textfont=dict(color=COLORS["muted"]),
                            hovertemplate="%{y}: %{x:.1%}<extra></extra>"))
-    fig.update_layout(xaxis=dict(range=[0, 1.12], tickformat=".0%"), bargap=0.35)
+    fig.update_traces(cliponaxis=False)
+    fig.update_layout(xaxis=dict(range=[0, 1.15], tickformat=".0%"), bargap=0.35)
     return _layout(fig, 180)
 
 
@@ -148,9 +150,10 @@ def confusion_heatmap(cm: list, labels: list[str]) -> go.Figure:
     cm = np.asarray(cm)
     row_tot = cm.sum(axis=1, keepdims=True)
     pct = np.divide(cm, row_tot, out=np.zeros_like(cm, dtype=float), where=row_tot > 0)
-    text = [[f"{cm[i, j]}<br><span style='font-size:10px'>{pct[i, j]:.0%}</span>" for j in range(len(labels))] for i in range(len(labels))]
+    text = [[f"<b>{cm[i, j]}</b><br>{pct[i, j]:.0%}" for j in range(len(labels))] for i in range(len(labels))]
     fig = go.Figure(go.Heatmap(z=pct, x=[l.capitalize() for l in labels], y=[l.capitalize() for l in labels],
-                               text=text, texttemplate="%{text}", colorscale=[[0, COLORS["panel"]], [0.5, "#5B4BB0"], [1, COLORS["violet"]]],
+                               text=text, texttemplate="%{text}", textfont=dict(size=14, color=COLORS["text"]),
+                               colorscale=[[0, COLORS["panel"]], [0.5, "#5B4BB0"], [1, COLORS["violet"]]],
                                showscale=False, zmin=0, zmax=1, xgap=3, ygap=3,
                                hovertemplate="True %{y} → predicted %{x}<br>%{z:.0%} of true %{y}<extra></extra>"))
     fig.update_layout(xaxis=dict(title="Predicted", side="bottom", showgrid=False), yaxis=dict(title="True", autorange="reversed", showgrid=False))
@@ -173,7 +176,8 @@ def class_distribution(counts: dict, title: str | None = None) -> go.Figure:
                            marker_color=[SENTIMENT_COLORS[l] for l in labs], text=[counts[l] for l in labs],
                            textposition="outside", textfont=dict(color=COLORS["muted"]),
                            hovertemplate="%{x}: %{y}<extra></extra>"))
-    fig.update_layout(yaxis_title="Examples", bargap=0.45)
+    fig.update_traces(cliponaxis=False)
+    fig.update_layout(yaxis=dict(title="Examples", range=[0, max(counts.values() or [1]) * 1.15]), bargap=0.45)
     return _layout(fig, 280, title)
 
 
