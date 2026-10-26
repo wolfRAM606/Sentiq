@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "notes": "Lexicon for Sentiq's rule-assisted aspect analysis. 'terms' are matched on spaCy lemmas or lowercase tokens; 'phrases' are multi-word expressions matched on lemma or lowercase sequences; 'ambiguous_terms' only count when one of the listed context lemmas appears in the same sentence (otherwise they are reported as ambiguous candidates); 'exclude_phrases' suppress this aspect's matches that overlap them. Edit this file to change the taxonomy.",
+  "general_targets": ["teacher", "professor", "sir", "madam", "mam", "ma'am", "maam", "course", "class", "lecturer", "instructor", "subject", "lecture", "faculty", "teaching", "tutor", "module"],
+  "aspects": [
+    {
+      "id": "clarity",
+      "label": "Teaching clarity & explanation",
+      "description": "How clearly concepts are explained and how understandable the teaching is.",
+      "terms": ["explain", "explanation", "explains", "clarity", "understand", "understandable", "confusing", "confuse", "confusion", "concept", "doubt", "elaborate", "illustrate", "clarify", "vague", "unclear"],
+      "phrases": ["easy to understand", "hard to understand", "difficult to understand", "make sense", "step by step", "clear explanation", "clearly explain", "explain clearly", "go over my head", "over my head"],
+      "ambiguous_terms": {"clear": ["explain", "explanation", "concept", "lecture", "teaching", "topic", "lesson", "teach", "voice", "presentation"], "clearly": ["explain", "teach", "concept", "speak", "present", "topic"]},
+      "exclude_phrases": [],
+      "action_negative": "Revisit how core concepts are explained: add worked examples, check understanding during class and summarise key points at the end of each session.",
+      "action_positive": "Keep the current explanation approach and consider sharing it as good practice."
+    },
+    {
+      "id": "knowledge",
+      "label": "Subject knowledge",
+      "description": "Perceived depth and accuracy of the instructor's subject expertise.",
+      "terms": ["knowledge", "knowledgeable", "expertise", "expert", "mastery", "erudite"],
+      "phrases": ["subject knowledge", "in depth knowledge", "in-depth knowledge", "command over", "know the subject", "knows the subject", "technical knowledge", "depth of knowledge", "well versed"],
+      "ambiguous_terms": {"depth": ["subject", "topic", "knowledge", "understand"]},
+      "exclude_phrases": ["practical knowledge", "required information", "real world knowledge"],
+      "action_negative": "Strengthen subject preparation for the weaker topics and invite questions that reveal gaps; consider co-teaching or guest sessions for specialised areas.",
+      "action_positive": "Students value the instructor's subject expertise; continue linking it to advanced and current material."
+    },
+    {
+      "id": "content",
+      "label": "Course content & organisation",
+      "description": "Syllabus coverage, topic selection, and how well the course is structured.",
+      "terms": ["content", "syllabus", "curriculum", "topic", "organization", "organisation", "organized", "organised", "structure", "structured", "outline", "chapter", "coverage", "unit", "disorganized", "disorganised"],
+      "phrases": ["course content", "course structure", "well organized", "well organised", "well structured", "poorly organized", "complete the syllabus", "cover the syllabus", "covered the syllabus"],
+      "ambiguous_terms": {},
+      "exclude_phrases": [],
+      "action_negative": "Publish a clear course outline with weekly topics and review whether the syllabus sequence and coverage match the learning outcomes.",
+      "action_positive": "The course structure is working well for students; keep the outline and sequencing consistent."
+    },
+    {
+      "id": "methodology",
+      "label": "Teaching methodology",
+      "description": "Teaching methods, style and instructional approach.",
+      "terms": ["method", "methodology", "technique", "approach", "style", "pedagogy", "methods"],
+      "phrases": ["teaching method", "teaching style", "way of teaching", "teaching methodology", "teaching technique", "way he teaches", "way she teaches", "way you teach"],
+      "ambiguous_terms": {},
+      "exclude_phrases": [],
+      "action_negative": "Diversify teaching methods (e.g. short activities, problem-solving, discussion) and gather quick mid-semester feedback on what helps students learn.",
+      "action_positive": "Students respond well to the teaching approach; document it so it can be sustained across sections."
+    },
+    {
+      "id": "engagement",
+      "label": "Student engagement & interaction",
+      "description": "Interaction, motivation, rapport and how engaging classes are.",
+      "terms": ["engage", "engaging", "engagement", "interactive", "interaction", "participation", "participate", "discussion", "discuss", "motivate", "motivation", "motivating", "encourage", "encouraging", "inspire", "inspiring", "interesting", "boring", "bore", "dull", "involve", "friendly", "cooperative", "supportive", "rude", "attitude", "behaviour", "behavior", "polite", "humble", "kind", "rapport", "monotonous", "mock", "mocking", "strict", "listen"],
+      "phrases": ["pay attention", "gave attention", "give attention", "ask questions", "asked question", "answer questions", "fun to attend", "falling asleep", "sleep in class"],
+      "ambiguous_terms": {"attention": ["student", "question", "give", "pay", "class", "individual"], "interest": ["class", "student", "subject", "topic", "lecture", "take", "create", "show"]},
+      "exclude_phrases": [],
+      "action_negative": "Build more interaction into sessions (questions, pair work, quick polls) and make sure students feel comfortable asking questions.",
+      "action_positive": "Classes are perceived as engaging and supportive; keep the interactive elements students mention."
+    },
+    {
+      "id": "materials",
+      "label": "Course materials & resources",
+      "description": "Notes, slides, books, recordings and other learning resources.",
+      "terms": ["material", "materials", "notes", "note", "slide", "slides", "ppt", "handout", "book", "textbook", "reference", "resource", "resources", "video", "recording", "presentation", "reading"],
+      "phrases": ["study material", "lecture notes", "reading list", "power point", "class notes", "reference books"],
+      "ambiguous_terms": {},
+      "exclude_phrases": [],
+      "action_negative": "Share organised, up-to-date materials (slides, notes, references) before or soon after each class and check they match what is taught.",
+      "action_positive": "Students find the learning resources useful; keep them updated and easy to access."
+    },
+    {
+      "id": "assignments",
+      "label": "Assignments & workload",
+      "description": "Homework, projects, deadlines and overall workload.",
+      "terms": ["assignment", "assignments", "homework", "workload", "deadline", "deadlines", "submission", "task", "tasks", "coursework"],
+      "phrases": ["work load", "too much work", "lot of work", "heavy workload", "assignment instructions", "home work"],
+      "ambiguous_terms": {"project": ["submit", "deadline", "group", "assign", "work", "give", "lot", "many"]},
+      "exclude_phrases": [],
+      "action_negative": "Clarify assignment requirements and rubrics, spread deadlines across the term and review whether the workload is proportionate.",
+      "action_positive": "Assignments are viewed positively; keep the current balance of workload and support."
+    },
+    {
+      "id": "assessment",
+      "label": "Assessment & grading fairness",
+      "description": "Exams, marking, grading transparency and fairness.",
+      "terms": ["exam", "exams", "examination", "quiz", "grade", "grading", "marking", "evaluation", "assessment", "unfair", "biased", "bias", "partial", "favoritism", "favouritism", "rubric", "midterm", "paper"],
+      "phrases": ["internal marks", "marking scheme", "grading criteria", "grading policy", "test paper", "give marks", "gave marks", "good marks", "less marks"],
+      "ambiguous_terms": {"fair": ["grade", "grading", "mark", "exam", "evaluation", "assessment", "treat", "student"], "mark": ["exam", "give", "test", "internal", "good", "less", "low", "full", "student"], "marks": ["exam", "give", "test", "internal", "good", "less", "low", "full"], "test": ["exam", "mark", "grade", "class", "difficult", "hard", "take", "surprise"], "result": ["exam", "mark", "grade", "test"]},
+      "exclude_phrases": [],
+      "action_negative": "Make marking criteria transparent (share rubrics and examples), return feedback promptly and review consistency of grading across students.",
+      "action_positive": "Assessment is seen as fair and transparent; keep sharing criteria in advance."
+    },
+    {
+      "id": "pace",
+      "label": "Teaching pace",
+      "description": "Speed of delivery and time management in class.",
+      "terms": ["pace", "speed", "rush", "rushed", "hurry", "hurried", "pacing"],
+      "phrases": ["too fast", "too slow", "very fast", "very slow", "time management", "so fast", "so fast that"],
+      "ambiguous_terms": {"fast": ["teach", "lecture", "speak", "explain", "cover", "go", "class", "talk", "move"], "slow": ["teach", "lecture", "speak", "explain", "cover", "go", "class", "talk", "move"], "quickly": ["teach", "lecture", "speak", "explain", "cover", "go", "move", "talk"]},
+      "exclude_phrases": [],
+      "action_negative": "Check the pace of delivery: pause for questions, use short recap points and move faster or slower on topics according to student understanding.",
+      "action_positive": "Students are comfortable with the teaching pace; keep monitoring it for harder topics."
+    },
+    {
+      "id": "availability",
+      "label": "Availability & responsiveness",
+      "description": "Punctuality, accessibility outside class and response to student queries.",
+      "terms": ["available", "availability", "responsive", "respond", "reply", "punctual", "punctuality", "puntual", "absent", "approachable", "accessible", "contact", "unavailable", "regular", "irregular"],
+      "phrases": ["office hours", "after class", "on time", "free time", "reply to emails", "replies to emails", "come late", "comes late", "came late", "takes class late", "always late"],
+      "ambiguous_terms": {"late": ["class", "come", "arrive", "lecture", "always", "take", "reach"], "email": ["reply", "respond", "answer", "send", "contact"], "time": ["give", "extra", "spend", "devote", "punctual"]},
+      "exclude_phrases": [],
+      "action_negative": "Set and communicate dependable office hours and response times, and keep class start times consistent.",
+      "action_positive": "Students appreciate the instructor's availability; maintain clear office hours and response practices."
+    },
+    {
+      "id": "practical",
+      "label": "Practical relevance & examples",
+      "description": "Real-world examples, labs, hands-on work and career relevance.",
+      "terms": ["practical", "example", "examples", "application", "industry", "lab", "labs", "laboratory", "exposure", "hands-on", "career", "job", "realistic", "trend", "trends", "theoretical", "theory", "implementation", "internship"],
+      "phrases": ["real world", "real-world", "real life", "hands on", "practical knowledge", "case study", "case studies", "modern trends", "latest technology", "industry exposure", "practical examples"],
+      "ambiguous_terms": {"apply": ["concept", "knowledge", "real", "practice", "theory"]},
+      "exclude_phrases": [],
+      "action_negative": "Add real-world examples, lab or hands-on activities and explicit links between theory and practice or careers.",
+      "action_positive": "Practical examples and real-world relevance are appreciated; keep connecting theory to applications."
+    },
+    {
+      "id": "overall",
+      "label": "Overall course experience",
+      "description": "General evaluations of the course or instructor with no more specific aspect.",
+      "terms": ["overall", "experience", "recommend", "enjoy", "enjoyed", "satisfied", "satisfaction", "unsatisfied", "dissatisfied", "worthwhile", "waste"],
+      "phrases": ["best teacher", "best course", "worth it", "waste of time", "learnt a lot", "learned a lot", "great course", "good course", "bad course", "best professor"],
+      "ambiguous_terms": {},
+      "exclude_phrases": [],
+      "action_negative": "Overall impressions are negative in several reviews; review the specific aspect findings above to identify where to start and discuss them with students.",
+      "action_positive": "Overall impressions of the course are positive; consider which practices students mention most and keep them."
+    }
+  ]
+}
