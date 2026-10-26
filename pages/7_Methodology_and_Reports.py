@@ -87,7 +87,10 @@ Product: **{PRODUCT_NAME} — {PRODUCT_DESCRIPTOR}** · *{TAGLINE}*
 
 ### Scales
 * **Average sentiment score** = mean of P(positive) − P(negative), from −1 (all negative) to +1 (all positive).
-* **Feedback indicator** = 100 × (positive share + 0.5 × neutral share) = 50 × positive share + 50 × (1 − negative share).
+* **Feedback indicator** = 100 × (positive share + 0.5 × neutral share), i.e. 50% positive share + 50% negative
+  complement (1 − negative share): with p + u + n = 1, 0.5p + 0.5(1 − n) = p + 0.5u. (A 70/30 weighting would give
+  100 × (p + 0.3u) instead — all-neutral feedback would score 30 rather than the midpoint 50 — so the symmetric
+  50/50 form is used.)
 
 ### Limitations and appropriate use
 """ + "\n".join(f"* {l}" for l in LIMITATIONS) + """

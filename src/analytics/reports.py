@@ -63,7 +63,8 @@ def build_markdown(ctx: dict) -> str:
     lines += ["", f"- Average sentiment score (P(positive) − P(negative), range −1 to +1): "
                   f"{k['avg_sentiment_score']:.2f}" if k.get("avg_sentiment_score") is not None else "",
               f"- Sentiment-derived feedback indicator: {score:.1f} / 100 "
-              "(100 × [positive share + 0.5 × neutral share])" if score is not None else "",
+              "(100 × [positive share + 0.5 × neutral share] = 50% positive share + 50% negative complement)"
+              if score is not None else "",
               f"- Low-confidence predictions flagged for review: {k['review_needed']}", "",
               "## Key findings", ""]
     lines += [f"- {i['text']}" for i in ctx["insights"]] or ["- No findings for this selection."]
@@ -164,7 +165,7 @@ footer{{margin-top:40px;color:var(--muted);font-size:.8rem;border-top:1px solid 
 {"<p class='banner'>This report uses the bundled <b>synthetic demonstration dataset</b>. It is not real student feedback.</p>" if demo else ""}
 <p><b>Dataset:</b> {esc(ctx['dataset_name'])} · <b>Selection:</b> {esc(ctx['filter_text'])} · <b>Model:</b> {esc(ctx['model_status'])}</p>
 <div class="kpis">
- <div class="kpi feat"><div class="l">Feedback indicator</div><div class="v">{f"{score:.1f}" if score is not None else "—"}</div><div class="muted">100 × (positive + 0.5 × neutral share)</div></div>
+ <div class="kpi feat"><div class="l">Feedback indicator</div><div class="v">{f"{score:.1f}" if score is not None else "—"}</div><div class="muted">100 × (positive + 0.5 × neutral share) = 50% positive + 50% (1 − negative)</div></div>
  <div class="kpi"><div class="l">Valid reviews</div><div class="v">{k['valid_reviews']}</div></div>
  <div class="kpi"><div class="l">Avg sentiment score</div><div class="v">{f"{avg:+.2f}" if avg is not None else "—"}</div><div class="muted">P(pos) − P(neg), −1…+1</div></div>
  <div class="kpi"><div class="l">Review needed</div><div class="v">{k['review_needed']}</div><div class="muted">low-confidence predictions</div></div>

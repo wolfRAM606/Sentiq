@@ -71,8 +71,11 @@ taxonomy of 12 teaching aspects is matched on spaCy lemmas and phrases within cl
 context, and exclusion phrases prevent known false matches. Sentiment comes from the trained classifier applied to
 the clause. We report no aspect accuracy because we had no aspect-annotated evaluation data.
 
-**What is the feedback indicator?** 100 × (positive share + ½ neutral share), on a 0–100 scale. 50 means positive
-and negative balance. It describes expressed opinion, not teaching quality. It is withheld for groups with fewer
+**What is the feedback indicator?** 100 × (positive share + ½ neutral share), on a 0–100 scale. That equals
+50% positive share + 50% negative complement (1 − negative share), because p + u + n = 1 gives
+0.5p + 0.5(1 − n) = p + 0.5u. 50 means positive and negative balance, and all-neutral feedback also scores 50. The
+brief's "70/30" wording would give 100 × (p + 0.3u) instead: all-neutral would score 30. We chose 50/50 because it
+is symmetric. It describes expressed opinion, not teaching quality. It is withheld for groups with fewer
 than 15 reviews, and groups are not ranked.
 
 **How are recommendations generated?** By deterministic rules. An issue needs at least 3 negative mentions and at

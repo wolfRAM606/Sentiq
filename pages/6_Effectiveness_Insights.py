@@ -40,8 +40,9 @@ with b:
     n = kpis["valid_reviews"]
     st.markdown(f"With **{c['positive']}** positive, **{c['neutral']}** neutral and **{c['negative']}** negative predictions out of "
                 f"**{n}** reviews: 100 × ({c['positive']}/{n} + 0.5 × {c['neutral']}/{n}) = **{score:.1f}**.")
-    st.caption("Proportions use predicted (not human-labelled) sentiment. A neutral review counts half. 50 means positive and "
-               "negative feedback balance out.")
+    st.caption("A 50/50 weighting of the positive share and the negative complement (1 − negative share); since "
+               "p + u + n = 1, 0.5p + 0.5(1 − n) = p + 0.5u. Proportions use predicted (not human-labelled) sentiment. "
+               "50 means positive and negative feedback balance out; all-neutral feedback also scores 50.")
 if n < MIN_SAMPLE_WARNING:
     st.warning(f"Minimum-sample warning: only {n} reviews are in the selection (recommended ≥ {MIN_SAMPLE_WARNING}). "
                "The indicator can change substantially with a few additional reviews.")

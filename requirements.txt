@@ -5,6 +5,9 @@ en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_
 scikit-learn==1.8.0
 pandas==2.2.2
 numpy==1.26.4
+# pinned: newer pyarrow (a Streamlit dependency) requires NumPy >= 2
+pyarrow==24.0.0
+scipy==1.13.1
 plotly==7.1.0
 joblib==1.5.3
 pytest==8.2.1

@@ -123,9 +123,18 @@ Indicator = 100 × (positive share + 0.5 × neutral share)
           = 50 × positive share + 50 × (1 − negative share)
 ```
 
-The specification also mentioned a "70% positive / 30% negative-complement" weighting. That weighting equals
-100 × (p + 0.3·n), not the stated formula, so the two are not equivalent. Sentiq implements the explicitly defined
-formula above, which is an equal 50/50 weighting, and documents it everywhere it is shown.
+This is a **50% positive share + 50% negative complement (1 − negative share)** weighting. Write p, u and n for the
+positive, neutral and negative shares, so that p + u + n = 1. Then 1 − n = p + u, and
+
+```
+0.5·p + 0.5·(1 − n) = 0.5·p + 0.5·(p + u) = p + 0.5·u
+```
+
+The project brief also described the score as "70% positive share + 30% negative complement". That gives
+0.7·p + 0.3·(p + u) = 100 × (p + 0.3·u), which differs from the stated formula whenever there are neutral reviews.
+For example, all-neutral feedback scores 30 under 70/30 but 50 under 50/50, and a 40% / 40% / 20% (pos / neu / neg)
+split scores 52 vs 60. Sentiq keeps the 50/50 version. It is symmetric, and it puts all-neutral feedback at the
+midpoint of 50.
 
 The indicator is computed from *predicted* sentiment. Aspect-level indicators require at least 3 mentioning
 reviews, and group indicators require at least 15 reviews. Groups are listed alphabetically and never ranked. A
