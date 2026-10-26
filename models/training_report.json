@@ -1,0 +1,954 @@
+{
+  "primary_model": "logistic_regression",
+  "primary_selection_rule": "Logistic Regression is the pre-declared primary model; all models are tuned with 5-fold stratified cross-validation on the training split only (macro-F1).",
+  "dataset": {
+    "name": "Student Feedback Data (mbalvi/student_feedback_data)",
+    "url": "https://github.com/mbalvi/student_feedback_data",
+    "file": "Student_Feedback.csv",
+    "license": "GPL-3.0 (as declared in the source repository's LICENSE file)",
+    "label_mapping": "0 = negative, 1 = positive, 2 = neutral (inferred from README class counts and verified against the file)",
+    "sha256": "f9dc6042c74f5ef725e77289f896e86ddff849cbd1c2fafda4523927c131087b",
+    "cleaning": {
+      "encoding_detected": "cp1252",
+      "raw_rows": 1086,
+      "raw_label_counts": {
+        "1": 551,
+        "0": 436,
+        "2": 99
+      },
+      "dropped_unknown_label": 0,
+      "dropped_empty_text": 0,
+      "conflicting_label_texts": [
+        "you taught us very well"
+      ],
+      "dropped_conflicting_rows": 2,
+      "dropped_duplicate_rows": 23,
+      "clean_rows": 1061,
+      "clean_label_counts": {
+        "positive": 548,
+        "negative": 414,
+        "neutral": 99
+      }
+    }
+  },
+  "split": {
+    "strategy": "stratified train/test split",
+    "test_size": 0.2,
+    "random_state": 42,
+    "train_rows": 848,
+    "test_rows": 213,
+    "train_label_counts": {
+      "positive": 438,
+      "negative": 331,
+      "neutral": 79
+    },
+    "test_label_counts": {
+      "positive": 110,
+      "negative": 83,
+      "neutral": 20
+    }
+  },
+  "models": {
+    "majority_baseline": {
+      "display_name": "Majority-class baseline",
+      "best_params": {
+        "clf__strategy": "most_frequent"
+      },
+      "cv_macro_f1_mean": 0.2270597526367649,
+      "cv_macro_f1_std": 0.000876757026391172,
+      "test": {
+        "accuracy": 0.5164319248826291,
+        "macro_f1": 0.22703818369453044,
+        "weighted_f1": 0.3517492986816668,
+        "per_class": {
+          "negative": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 83
+          },
+          "neutral": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 20
+          },
+          "positive": {
+            "precision": 0.5164319248826291,
+            "recall": 1.0,
+            "f1": 0.6811145510835913,
+            "support": 110
+          }
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            83
+          ],
+          [
+            0,
+            0,
+            20
+          ],
+          [
+            0,
+            0,
+            110
+          ]
+        ],
+        "labels": [
+          "negative",
+          "neutral",
+          "positive"
+        ]
+      },
+      "supports_probabilities": true
+    },
+    "multinomial_nb": {
+      "display_name": "Multinomial Naive Bayes",
+      "best_params": {
+        "clf__alpha": 0.1,
+        "tfidf__ngram_range": [
+          1,
+          2
+        ]
+      },
+      "cv_macro_f1_mean": 0.5789416796401989,
+      "cv_macro_f1_std": 0.011330917984912214,
+      "test": {
+        "accuracy": 0.7136150234741784,
+        "macro_f1": 0.5260898462386142,
+        "weighted_f1": 0.6889341905731269,
+        "per_class": {
+          "negative": {
+            "precision": 0.7468354430379747,
+            "recall": 0.7108433734939759,
+            "f1": 0.7283950617283951,
+            "support": 83
+          },
+          "neutral": {
+            "precision": 0.2,
+            "recall": 0.05,
+            "f1": 0.08,
+            "support": 20
+          },
+          "positive": {
+            "precision": 0.7131782945736435,
+            "recall": 0.8363636363636363,
+            "f1": 0.7698744769874477,
+            "support": 110
+          }
+        },
+        "confusion_matrix": [
+          [
+            59,
+            1,
+            23
+          ],
+          [
+            5,
+            1,
+            14
+          ],
+          [
+            15,
+            3,
+            92
+          ]
+        ],
+        "labels": [
+          "negative",
+          "neutral",
+          "positive"
+        ]
+      },
+      "supports_probabilities": true
+    },
+    "logistic_regression": {
+      "display_name": "Logistic Regression (primary)",
+      "best_params": {
+        "clf__C": 3.0,
+        "tfidf__ngram_range": [
+          1,
+          2
+        ]
+      },
+      "cv_macro_f1_mean": 0.644471852023389,
+      "cv_macro_f1_std": 0.034199244059387415,
+      "test": {
+        "accuracy": 0.6525821596244131,
+        "macro_f1": 0.5293879056047198,
+        "weighted_f1": 0.6516925298101293,
+        "per_class": {
+          "negative": {
+            "precision": 0.6883116883116883,
+            "recall": 0.6385542168674698,
+            "f1": 0.6625,
+            "support": 83
+          },
+          "neutral": {
+            "precision": 0.2,
+            "recall": 0.2,
+            "f1": 0.2,
+            "support": 20
+          },
+          "positive": {
+            "precision": 0.7068965517241379,
+            "recall": 0.7454545454545455,
+            "f1": 0.7256637168141593,
+            "support": 110
+          }
+        },
+        "confusion_matrix": [
+          [
+            53,
+            10,
+            20
+          ],
+          [
+            2,
+            4,
+            14
+          ],
+          [
+            22,
+            6,
+            82
+          ]
+        ],
+        "labels": [
+          "negative",
+          "neutral",
+          "positive"
+        ]
+      },
+      "supports_probabilities": true
+    },
+    "linear_svm": {
+      "display_name": "Linear SVM",
+      "best_params": {
+        "clf__C": 1.0,
+        "tfidf__ngram_range": [
+          1,
+          2
+        ]
+      },
+      "cv_macro_f1_mean": 0.6402099599541754,
+      "cv_macro_f1_std": 0.030745297265413193,
+      "test": {
+        "accuracy": 0.6807511737089202,
+        "macro_f1": 0.5373917748917749,
+        "weighted_f1": 0.6729963112005365,
+        "per_class": {
+          "negative": {
+            "precision": 0.7142857142857143,
+            "recall": 0.6626506024096386,
+            "f1": 0.6875,
+            "support": 83
+          },
+          "neutral": {
+            "precision": 0.2,
+            "recall": 0.15,
+            "f1": 0.17142857142857143,
+            "support": 20
+          },
+          "positive": {
+            "precision": 0.71900826446281,
+            "recall": 0.7909090909090909,
+            "f1": 0.7532467532467533,
+            "support": 110
+          }
+        },
+        "confusion_matrix": [
+          [
+            55,
+            8,
+            20
+          ],
+          [
+            3,
+            3,
+            14
+          ],
+          [
+            19,
+            4,
+            87
+          ]
+        ],
+        "labels": [
+          "negative",
+          "neutral",
+          "positive"
+        ]
+      },
+      "supports_probabilities": false
+    }
+  },
+  "calibration": {
+    "ece": 0.061629975761304634,
+    "bins": [
+      {
+        "lower": 0.30000000000000004,
+        "upper": 0.4,
+        "confidence": 0.37926797718002664,
+        "accuracy": 1.0,
+        "count": 2
+      },
+      {
+        "lower": 0.4,
+        "upper": 0.5,
+        "confidence": 0.46048960713651027,
+        "accuracy": 0.35714285714285715,
+        "count": 28
+      },
+      {
+        "lower": 0.5,
+        "upper": 0.6000000000000001,
+        "confidence": 0.5445785878145023,
+        "accuracy": 0.6136363636363636,
+        "count": 44
+      },
+      {
+        "lower": 0.6000000000000001,
+        "upper": 0.7000000000000001,
+        "confidence": 0.6481787782711449,
+        "accuracy": 0.64,
+        "count": 50
+      },
+      {
+        "lower": 0.7000000000000001,
+        "upper": 0.8,
+        "confidence": 0.7445641346370534,
+        "accuracy": 0.7435897435897436,
+        "count": 39
+      },
+      {
+        "lower": 0.8,
+        "upper": 0.9,
+        "confidence": 0.8490852071985734,
+        "accuracy": 0.75,
+        "count": 28
+      },
+      {
+        "lower": 0.9,
+        "upper": 1.0,
+        "confidence": 0.9423701677077897,
+        "accuracy": 0.8181818181818182,
+        "count": 22
+      }
+    ]
+  },
+  "misclassified_examples": [
+    {
+      "text": "he is not annoyed at repeated similar quries",
+      "true": "positive",
+      "predicted": "negative",
+      "probabilities": {
+        "negative": 0.9828,
+        "neutral": 0.0156,
+        "positive": 0.0016
+      }
+    },
+    {
+      "text": "not bad.",
+      "true": "positive",
+      "predicted": "negative",
+      "probabilities": {
+        "negative": 0.9828,
+        "neutral": 0.0156,
+        "positive": 0.0016
+      }
+    },
+    {
+      "text": "we could not get about programming to much extent",
+      "true": "neutral",
+      "predicted": "negative",
+      "probabilities": {
+        "negative": 0.9828,
+        "neutral": 0.0156,
+        "positive": 0.0016
+      }
+    },
+    {
+      "text": "sir my best wishes for u! always be happy. Trust in allah and keeping on work very hard",
+      "true": "neutral",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.0357,
+        "neutral": 0.0319,
+        "positive": 0.9324
+      }
+    },
+    {
+      "text": "teachers should be kindful",
+      "true": "negative",
+      "predicted": "neutral",
+      "probabilities": {
+        "negative": 0.1348,
+        "neutral": 0.8627,
+        "positive": 0.0025
+      }
+    },
+    {
+      "text": "you are very honest with your duly",
+      "true": "neutral",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.0979,
+        "neutral": 0.0459,
+        "positive": 0.8562
+      }
+    },
+    {
+      "text": "no complain sir you did well",
+      "true": "positive",
+      "predicted": "negative",
+      "probabilities": {
+        "negative": 0.8463,
+        "neutral": 0.0714,
+        "positive": 0.0824
+      }
+    },
+    {
+      "text": "Good  teacher with an excellent conceptual approach",
+      "true": "negative",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.0613,
+        "neutral": 0.096,
+        "positive": 0.8427
+      }
+    },
+    {
+      "text": "i tried but it is tough",
+      "true": "negative",
+      "predicted": "neutral",
+      "probabilities": {
+        "negative": 0.08,
+        "neutral": 0.8353,
+        "positive": 0.0847
+      }
+    },
+    {
+      "text": "we were afraid of you sir",
+      "true": "positive",
+      "predicted": "neutral",
+      "probabilities": {
+        "negative": 0.0608,
+        "neutral": 0.8248,
+        "positive": 0.1143
+      }
+    },
+    {
+      "text": "their communication is excellent",
+      "true": "negative",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.0897,
+        "neutral": 0.1028,
+        "positive": 0.8075
+      }
+    },
+    {
+      "text": "a good teacher never discourages",
+      "true": "neutral",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.141,
+        "neutral": 0.0857,
+        "positive": 0.7734
+      }
+    },
+    {
+      "text": "he is unique among all teachers",
+      "true": "positive",
+      "predicted": "negative",
+      "probabilities": {
+        "negative": 0.7634,
+        "neutral": 0.0423,
+        "positive": 0.1943
+      }
+    },
+    {
+      "text": "he is soft spoken teacher",
+      "true": "positive",
+      "predicted": "negative",
+      "probabilities": {
+        "negative": 0.7634,
+        "neutral": 0.0423,
+        "positive": 0.1943
+      }
+    },
+    {
+      "text": "sir, you have excellent teaching methodology that we learn easily",
+      "true": "negative",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.0376,
+        "neutral": 0.2032,
+        "positive": 0.7592
+      }
+    },
+    {
+      "text": "we wish that we get chance to learn from you again",
+      "true": "neutral",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.2028,
+        "neutral": 0.0505,
+        "positive": 0.7467
+      }
+    },
+    {
+      "text": "teachers are well dressed",
+      "true": "neutral",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.1495,
+        "neutral": 0.1237,
+        "positive": 0.7269
+      }
+    },
+    {
+      "text": "student likes those teachers who have indepth knowledge",
+      "true": "neutral",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.1636,
+        "neutral": 0.1182,
+        "positive": 0.7183
+      }
+    },
+    {
+      "text": "I am weak in it. Please guide me about this",
+      "true": "neutral",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.1462,
+        "neutral": 0.1366,
+        "positive": 0.7172
+      }
+    },
+    {
+      "text": "Sir you are great",
+      "true": "positive",
+      "predicted": "neutral",
+      "probabilities": {
+        "negative": 0.0706,
+        "neutral": 0.7169,
+        "positive": 0.2125
+      }
+    },
+    {
+      "text": "they take labs at the given time",
+      "true": "positive",
+      "predicted": "negative",
+      "probabilities": {
+        "negative": 0.7114,
+        "neutral": 0.133,
+        "positive": 0.1556
+      }
+    },
+    {
+      "text": "SIR i found programming tough",
+      "true": "negative",
+      "predicted": "neutral",
+      "probabilities": {
+        "negative": 0.1337,
+        "neutral": 0.699,
+        "positive": 0.1673
+      }
+    },
+    {
+      "text": "you are a teacher who gives heights to others",
+      "true": "positive",
+      "predicted": "negative",
+      "probabilities": {
+        "negative": 0.6925,
+        "neutral": 0.0563,
+        "positive": 0.2513
+      }
+    },
+    {
+      "text": "teachers should take feedback of their previous lecture",
+      "true": "negative",
+      "predicted": "neutral",
+      "probabilities": {
+        "negative": 0.2984,
+        "neutral": 0.6747,
+        "positive": 0.027
+      }
+    },
+    {
+      "text": "Some teachers just care about rules",
+      "true": "negative",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.2722,
+        "neutral": 0.0565,
+        "positive": 0.6713
+      }
+    },
+    {
+      "text": "keeps students in confusion",
+      "true": "negative",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.2278,
+        "neutral": 0.1275,
+        "positive": 0.6447
+      }
+    },
+    {
+      "text": "Teaching methodology hard to understand.",
+      "true": "negative",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.0896,
+        "neutral": 0.2747,
+        "positive": 0.6356
+      }
+    },
+    {
+      "text": "they allow students to ask without hesitation",
+      "true": "positive",
+      "predicted": "negative",
+      "probabilities": {
+        "negative": 0.6356,
+        "neutral": 0.097,
+        "positive": 0.2674
+      }
+    },
+    {
+      "text": "teaching method is very tough and very diffcult to understand",
+      "true": "negative",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.1397,
+        "neutral": 0.2255,
+        "positive": 0.6348
+      }
+    },
+    {
+      "text": "you never shouted at any student that is great",
+      "true": "positive",
+      "predicted": "negative",
+      "probabilities": {
+        "negative": 0.6346,
+        "neutral": 0.0764,
+        "positive": 0.289
+      }
+    },
+    {
+      "text": "Tries to just ignore student's problem rather than solving.",
+      "true": "negative",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.1628,
+        "neutral": 0.2035,
+        "positive": 0.6337
+      }
+    },
+    {
+      "text": "teachers have minimum knowledge",
+      "true": "negative",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.3326,
+        "neutral": 0.034,
+        "positive": 0.6333
+      }
+    },
+    {
+      "text": "in your first lecture you told us story of a ex-student who was not good at studies but became a developer after your encouragement. I was highly inspired with your words",
+      "true": "positive",
+      "predicted": "negative",
+      "probabilities": {
+        "negative": 0.6301,
+        "neutral": 0.2555,
+        "positive": 0.1144
+      }
+    },
+    {
+      "text": "he teaches basic concepts and evaluates from advanced ones",
+      "true": "negative",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.2926,
+        "neutral": 0.0836,
+        "positive": 0.6238
+      }
+    },
+    {
+      "text": "they should take classes as per schedule",
+      "true": "neutral",
+      "predicted": "negative",
+      "probabilities": {
+        "negative": 0.6187,
+        "neutral": 0.2464,
+        "positive": 0.1349
+      }
+    },
+    {
+      "text": "Teachers should be neutral for both genders",
+      "true": "negative",
+      "predicted": "neutral",
+      "probabilities": {
+        "negative": 0.3683,
+        "neutral": 0.6158,
+        "positive": 0.0159
+      }
+    },
+    {
+      "text": "teacher leave topics incompleted",
+      "true": "negative",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.3394,
+        "neutral": 0.0524,
+        "positive": 0.6082
+      }
+    },
+    {
+      "text": "awards high grades to undeserving students",
+      "true": "negative",
+      "predicted": "neutral",
+      "probabilities": {
+        "negative": 0.2236,
+        "neutral": 0.6066,
+        "positive": 0.1698
+      }
+    },
+    {
+      "text": "lectures should be taken in time",
+      "true": "negative",
+      "predicted": "neutral",
+      "probabilities": {
+        "negative": 0.2291,
+        "neutral": 0.6032,
+        "positive": 0.1677
+      }
+    },
+    {
+      "text": "knowing family background and economic status is equally important with studies",
+      "true": "neutral",
+      "predicted": "positive",
+      "probabilities": {
+        "negative": 0.1758,
+        "neutral": 0.2247,
+        "positive": 0.5995
+      }
+    }
+  ],
+  "misclassified_total": 74,
+  "top_features": {
+    "negative": [
+      {
+        "feature": "not",
+        "weight": 3.3031
+      },
+      {
+        "feature": "no",
+        "weight": 1.8726
+      },
+      {
+        "feature": "teacher not",
+        "weight": 1.7541
+      },
+      {
+        "feature": "few",
+        "weight": 1.3049
+      },
+      {
+        "feature": "neg_subject",
+        "weight": 1.3036
+      },
+      {
+        "feature": "late",
+        "weight": 1.2814
+      },
+      {
+        "feature": "average",
+        "weight": 1.2321
+      },
+      {
+        "feature": "teacher",
+        "weight": 1.193
+      },
+      {
+        "feature": "burden",
+        "weight": 1.154
+      },
+      {
+        "feature": "lack",
+        "weight": 1.1172
+      },
+      {
+        "feature": "burden student",
+        "weight": 1.1084
+      },
+      {
+        "feature": "lab",
+        "weight": 1.0952
+      },
+      {
+        "feature": "teacher discourage",
+        "weight": 1.0835
+      },
+      {
+        "feature": "fail",
+        "weight": 1.081
+      },
+      {
+        "feature": "assignment",
+        "weight": 1.0753
+      }
+    ],
+    "neutral": [
+      {
+        "feature": "should",
+        "weight": 4.1954
+      },
+      {
+        "feature": "but",
+        "weight": 2.7139
+      },
+      {
+        "feature": "sir",
+        "weight": 2.3396
+      },
+      {
+        "feature": "nice teacher",
+        "weight": 2.1075
+      },
+      {
+        "feature": "strict teacher",
+        "weight": 2.0222
+      },
+      {
+        "feature": "should not",
+        "weight": 1.851
+      },
+      {
+        "feature": "understand",
+        "weight": 1.7442
+      },
+      {
+        "feature": "system",
+        "weight": 1.5959
+      },
+      {
+        "feature": "style good",
+        "weight": 1.5695
+      },
+      {
+        "feature": "teacher should",
+        "weight": 1.5102
+      },
+      {
+        "feature": "well but",
+        "weight": 1.5018
+      },
+      {
+        "feature": "necessary",
+        "weight": 1.4474
+      },
+      {
+        "feature": "try understand",
+        "weight": 1.4187
+      },
+      {
+        "feature": "talk",
+        "weight": 1.4013
+      },
+      {
+        "feature": "time",
+        "weight": 1.4001
+      }
+    ],
+    "positive": [
+      {
+        "feature": "good",
+        "weight": 2.2807
+      },
+      {
+        "feature": "help",
+        "weight": 1.6818
+      },
+      {
+        "feature": "learn",
+        "weight": 1.6379
+      },
+      {
+        "feature": "teach",
+        "weight": 1.6304
+      },
+      {
+        "feature": "very",
+        "weight": 1.4841
+      },
+      {
+        "feature": "easy",
+        "weight": 1.0873
+      },
+      {
+        "feature": "encourage",
+        "weight": 1.018
+      },
+      {
+        "feature": "understand problem",
+        "weight": 0.9808
+      },
+      {
+        "feature": "knowledge",
+        "weight": 0.945
+      },
+      {
+        "feature": "helpful",
+        "weight": 0.9314
+      },
+      {
+        "feature": "friendly",
+        "weight": 0.8812
+      },
+      {
+        "feature": "hard",
+        "weight": 0.8601
+      },
+      {
+        "feature": "neg_computer",
+        "weight": 0.8434
+      },
+      {
+        "feature": "way",
+        "weight": 0.8042
+      },
+      {
+        "feature": "content",
+        "weight": 0.7906
+      }
+    ]
+  },
+  "classes": [
+    "negative",
+    "neutral",
+    "positive"
+  ],
+  "versions": {
+    "python": "3.11.9",
+    "scikit_learn": "1.8.0",
+    "spacy": "3.8.16",
+    "spacy_model": "core_web_sm-3.8.0",
+    "pandas": "2.2.2",
+    "numpy": "1.26.4"
+  },
+  "trained_at": "2026-10-27 01:04:54",
+  "training_seconds": 4.15,
+  "reload_check": {
+    "identical_predictions": true,
+    "max_probability_difference": 0.0,
+    "artifact_bytes": 76192
+  }
+}
