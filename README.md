@@ -91,8 +91,8 @@ the bundled labelled dataset on first start. If that also fails, the app tells y
 
 ## Deploying to Streamlit Community Cloud
 
-1. Push this repository to GitHub (see `docs/GIT_CHANGELOG.md` for the current push status).
-2. At <https://share.streamlit.io>, create an app from the repository, branch `main`, main file `app.py`.
+1. The code is on GitHub at <https://github.com/wolfRAM606/Sentiq>.
+2. At <https://share.streamlit.io>, create an app from `wolfRAM606/Sentiq`, branch `main`, main file `app.py`.
 3. Under **Advanced settings**, select **Python 3.11**.
 4. Deploy. No secrets or API keys are needed. The first build installs spaCy and the `en_core_web_sm` wheel.
 

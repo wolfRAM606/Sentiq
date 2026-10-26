@@ -6,7 +6,7 @@ This is an audit trail of every commit and push made while building Sentiq.
 
 * Workspace `C:\Users\smart\Coding_Programming\Sentiq` was **empty** and **not a Git repository** (no prior work to preserve).
 * `git init -b main` was run on 2026-10-27. Branch: `main`.
-* **No remote is configured**, and the GitHub CLI is not installed, so **no push has been made**. See "Push status" below.
+* At the start there was no remote. `origin` = <https://github.com/wolfRAM606/Sentiq.git> was added on 2026-10-27, once the user provided the URL. See "Push status" below.
 * Commit author: the machine's global Git identity `R.Sriram <sriram.r.work@gmail.com>`, which the user has confirmed is the correct author for this project.
 
 ## Milestone 1 — Foundation, data, NLP/ML, analytics, UI, tests (2026-10-27 01:33)
@@ -58,15 +58,13 @@ for its hash) contains:
 
 ## Push status
 
-No push has been made. To publish:
+| Date | Remote | Branch | Result | Commits included |
+|---|---|---|---|---|
+| 2026-10-27 02:02 | `origin` (https://github.com/wolfRAM606/Sentiq.git, empty before the push) | `main` → `main` (new branch, upstream set) | ✅ Succeeded. `git ls-remote origin main` = `1a55121` | `08429db` … `1a55121` (all 9 commits above) |
+| 2026-10-27 | `origin` | `main` | See `git log origin/main` | `docs: record GitHub push` (this changelog update) |
 
-```bash
-git remote add origin https://github.com/<your-account>/sentiq.git
-```
-
-```bash
-git push -u origin main
-```
+The "Pushed: no" notes in Milestones 1–3 describe the state when each milestone was committed. All of those commits
+were included in the first push above.
 
 Pushing to GitHub does **not** deploy the app. Streamlit Community Cloud deployment is a separate manual step
-(see README → Deploying).
+(see README → Deploying). **The app has not been deployed yet.**

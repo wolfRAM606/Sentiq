@@ -13,7 +13,7 @@
 | 5 Interface | ✅ Done | Midnight Intelligence theme; 7 pages inspected in the in-app browser; defects fixed |
 | 6 Exports & docs | ✅ Done | CSV / Markdown / HTML exports; README, methodology, architecture, provenance, viva guide, changelog |
 | 7 Testing & hardening | ✅ Done | 62 pytest tests passing; upload → analysis tested in the browser; small-data states checked; clean-venv install verified (see below) |
-| 8 Delivery | ⚠️ Partial | All work committed locally on `main`. **Not pushed** (no remote configured). **Not deployed** to Streamlit Cloud |
+| 8 Delivery | ⚠️ Partial | All work committed on `main` and **pushed** to https://github.com/wolfRAM606/Sentiq (2026-10-27). **Not deployed** to Streamlit Cloud |
 
 ## Measured results (from `models/training_report.json`)
 
@@ -35,7 +35,7 @@
 
 ## Not verified / known limitations
 
-* Not deployed to Streamlit Community Cloud. No push was made, because the repository has no remote.
+* Not deployed to Streamlit Community Cloud. The code is on GitHub, but deployment is a separate manual step.
 * File downloads were verified by unit tests of the export content, not by clicking download buttons in the browser.
 * Model performance is modest, especially for the neutral class (see methodology).
 * No aspect-level accuracy: there is no aspect-annotated evaluation data.
@@ -46,5 +46,5 @@
 
 ## Exact next actions for the user
 
-1. Create a GitHub repository, then run `git remote add origin <url>` and `git push -u origin main`.
-2. Deploy on <https://share.streamlit.io>: main file `app.py`, Python 3.11.
+1. Deploy on <https://share.streamlit.io>: repository `wolfRAM606/Sentiq`, branch `main`, main file `app.py`, Python 3.11 (under Advanced settings).
+2. After it deploys, add the app URL to the GitHub repository's Website field and the README.
