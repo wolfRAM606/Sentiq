@@ -85,7 +85,7 @@ def test_reports_and_export(demo_analysis, analyzer):
 
 
 def test_no_api_key_dependency():
-    pattern = re.compile(r"(OPENAI|ANTHROPIC|API_KEY|st\.secrets|requests\.(get|post)|urllib\.request)")
+    pattern = re.compile(r"(_API_KEY|api_key|st\.secrets|requests\.(get|post)|urllib\.request|http\.client)")
     for path in list((ROOT / "src").rglob("*.py")) + list((ROOT / "pages").glob("*.py")) + [ROOT / "app.py"]:
         assert not pattern.search(path.read_text(encoding="utf-8")), path
 
