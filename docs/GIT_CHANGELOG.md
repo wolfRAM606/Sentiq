@@ -61,7 +61,8 @@ for its hash) contains:
 | Date | Remote | Branch | Result | Commits included |
 |---|---|---|---|---|
 | 2026-10-27 02:02 | `origin` (https://github.com/wolfRAM606/Sentiq.git, empty before the push) | `main` → `main` (new branch, upstream set) | ✅ Succeeded. `git ls-remote origin main` = `1a55121` | `08429db` … `1a55121` (all 9 commits above) |
-| 2026-10-27 | `origin` | `main` | See `git log origin/main` | `docs: record GitHub push` (this changelog update) |
+| 2026-10-27 | `origin` | `main` | ✅ Succeeded (`1a55121..c8aab1a`) | `c8aab1a` docs: record GitHub push and update deployment steps |
+| 2026-10-27 | `origin` | `main` | See `git log origin/main` | `chore: normalise line endings to LF` — no content change: 8 code/doc files had picked up CRLF from Windows text-mode edits (`git diff --ignore-cr-at-eol` is empty); 62 tests passed |
 
 The "Pushed: no" notes in Milestones 1–3 describe the state when each milestone was committed. All of those commits
 were included in the first push above.
