@@ -1,17 +1,146 @@
-[theme]
-base = "dark"
-primaryColor = "#A78BFA"
-backgroundColor = "#10111B"
-secondaryBackgroundColor = "#191B2B"
-textColor = "#F4F4FA"
-font = "sans serif"
-
 [server]
 maxUploadSize = 10
 headless = true
+# serves ./static (fonts and logo) at /app/static/
+enableStaticServing = true
 
 [browser]
 gatherUsageStats = false
 
 [client]
 toolbarMode = "minimal"
+
+# Sentiq design system (docs/DESIGN_SYSTEM.md): Ivory, Burgundy and Sage. Light is the default;
+# viewers can switch to dark under the app menu, Settings.
+[theme]
+base = "light"
+font = "IBM Plex Sans, sans-serif"
+headingFont = "Fraunces, serif"
+codeFont = "IBM Plex Mono, monospace"
+baseRadius = "none"
+showWidgetBorder = true
+showSidebarBorder = true
+
+[[theme.fontFaces]]
+family = "Fraunces"
+url = "app/static/fonts/Fraunces-Variable.woff2"
+weight = "100 900"
+style = "normal"
+
+[[theme.fontFaces]]
+family = "Fraunces"
+url = "app/static/fonts/Fraunces-Variable-Italic.woff2"
+weight = "100 900"
+style = "italic"
+
+[[theme.fontFaces]]
+family = "IBM Plex Sans"
+url = "app/static/fonts/IBMPlexSans-400.woff2"
+weight = 400
+style = "normal"
+
+[[theme.fontFaces]]
+family = "IBM Plex Sans"
+url = "app/static/fonts/IBMPlexSans-400-Italic.woff2"
+weight = 400
+style = "italic"
+
+[[theme.fontFaces]]
+family = "IBM Plex Sans"
+url = "app/static/fonts/IBMPlexSans-500.woff2"
+weight = 500
+style = "normal"
+
+[[theme.fontFaces]]
+family = "IBM Plex Sans"
+url = "app/static/fonts/IBMPlexSans-600.woff2"
+weight = 600
+style = "normal"
+
+[[theme.fontFaces]]
+family = "IBM Plex Mono"
+url = "app/static/fonts/IBMPlexMono-400.woff2"
+weight = 400
+style = "normal"
+
+[[theme.fontFaces]]
+family = "IBM Plex Mono"
+url = "app/static/fonts/IBMPlexMono-500.woff2"
+weight = 500
+style = "normal"
+
+[theme.light]
+primaryColor = "#702F45"
+backgroundColor = "#F5F0E8"
+secondaryBackgroundColor = "#EDE6DA"
+textColor = "#25242A"
+linkColor = "#702F45"
+borderColor = "#D3C8B6"
+chartCategoricalColors = ["#702F45", "#8AAB91", "#7A5D16", "#A8442F", "#625C57"]
+redColor = "#A8442F"
+redBackgroundColor = "rgba(168,68,47,0.08)"
+redTextColor = "#A8442F"
+orangeColor = "#7A5D16"
+orangeBackgroundColor = "rgba(122,93,22,0.09)"
+orangeTextColor = "#7A5D16"
+yellowColor = "#7A5D16"
+yellowBackgroundColor = "rgba(122,93,22,0.09)"
+yellowTextColor = "#7A5D16"
+blueColor = "#702F45"
+blueBackgroundColor = "rgba(112,47,69,0.07)"
+blueTextColor = "#702F45"
+greenColor = "#45694E"
+greenBackgroundColor = "rgba(138,171,145,0.16)"
+greenTextColor = "#45694E"
+violetColor = "#702F45"
+violetBackgroundColor = "rgba(112,47,69,0.07)"
+violetTextColor = "#702F45"
+grayColor = "#625C57"
+grayBackgroundColor = "#EDE6DA"
+grayTextColor = "#625C57"
+codeBackgroundColor = "#EDE6DA"
+dataframeBorderColor = "#D3C8B6"
+dataframeHeaderBackgroundColor = "#EDE6DA"
+
+[theme.light.sidebar]
+backgroundColor = "#EDE6DA"
+secondaryBackgroundColor = "#E5DCCC"
+borderColor = "#D3C8B6"
+
+[theme.dark]
+primaryColor = "#D08AA0"
+backgroundColor = "#1D1B1F"
+secondaryBackgroundColor = "#26232A"
+textColor = "#EFE8DC"
+linkColor = "#D08AA0"
+borderColor = "#3D3842"
+chartCategoricalColors = ["#D08AA0", "#9DBDA3", "#D9B66A", "#E58C73", "#ABA399"]
+redColor = "#E58C73"
+redBackgroundColor = "rgba(229,140,115,0.12)"
+redTextColor = "#E58C73"
+orangeColor = "#D9B66A"
+orangeBackgroundColor = "rgba(217,182,106,0.12)"
+orangeTextColor = "#D9B66A"
+yellowColor = "#D9B66A"
+yellowBackgroundColor = "rgba(217,182,106,0.12)"
+yellowTextColor = "#D9B66A"
+blueColor = "#D08AA0"
+blueBackgroundColor = "rgba(208,138,160,0.12)"
+blueTextColor = "#D08AA0"
+greenColor = "#9DBDA3"
+greenBackgroundColor = "rgba(157,189,163,0.12)"
+greenTextColor = "#9DBDA3"
+violetColor = "#D08AA0"
+violetBackgroundColor = "rgba(208,138,160,0.12)"
+violetTextColor = "#D08AA0"
+grayColor = "#ABA399"
+grayBackgroundColor = "#26232A"
+grayTextColor = "#ABA399"
+codeBackgroundColor = "#26232A"
+dataframeBorderColor = "#3D3842"
+dataframeHeaderBackgroundColor = "#26232A"
+
+[theme.dark.sidebar]
+backgroundColor = "#26232A"
+secondaryBackgroundColor = "#302C34"
+borderColor = "#3D3842"

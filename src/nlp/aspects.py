@@ -1,6 +1,6 @@
 """Hybrid, lexicon-assisted aspect analysis.
 
-This is a transparent rule-assisted component — not a trained aspect-based model.
+This is a transparent rule-assisted component. It is not a trained aspect-based model.
 Each review is split into sentences (spaCy) and then into clauses at contrastive
 conjunctions ("but", "however", ...). Aspect terms/phrases from the configurable
 taxonomy are matched on lemmas and lowercase tokens; each match keeps the clause

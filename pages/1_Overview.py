@@ -23,15 +23,15 @@ ui.hero(
     "Overview · Course feedback intelligence",
     "Every response <em>tells a story.</em>",
     "Sentiq reads each review with spaCy, predicts its sentiment with a trained classifier and links what students "
-    "say to specific teaching aspects — so patterns are backed by the comments behind them.",
+    "say to specific teaching aspects, so every pattern is backed by the comments behind it.",
     chips,
-    {"label": "Sentiment-derived feedback indicator", "value": f"{score:.1f}" if score is not None else "—", "suffix": "/ 100",
-     "note": f"100 × (positive + ½ neutral share) over {kpis['valid_reviews']} reviews. A summary of opinion, not a measure of teaching quality."},
+    {"label": "Sentiment-derived feedback indicator", "value": f"{score:.1f}" if score is not None else "n/a", "suffix": "/ 100",
+     "note": f"100 × (positive + ½ neutral share) over {kpis['valid_reviews']} reviews. It summarises expressed opinion and should be read alongside other evidence."},
 )
 
 if ds.kind == "demo":
     st.info("You are viewing the bundled **synthetic demonstration dataset** (written for demonstration, not real student feedback). "
-            "Upload your own CSV on the **Feedback Explorer** page.", icon=":material/science:")
+            "Upload your own CSV on the **Feedback Explorer** page.")
 if not model.available:
     st.warning(model.status.message)
 if reviews.empty:
@@ -51,7 +51,7 @@ with cols[3]:
     ui.kpi("Negative", c["negative"], f"{kpis['shares']['negative']:.0%} of reviews", "neg")
 with cols[4]:
     avg = kpis["avg_sentiment_score"]
-    ui.kpi("Avg sentiment score", f"{avg:+.2f}" if avg is not None else "—", "P(pos) − P(neg), scale −1 to +1", "ice")
+    ui.kpi("Avg sentiment score", f"{avg:+.2f}" if avg is not None else "n/a", "P(pos) − P(neg), scale −1 to +1", "ice")
 
 left, right = st.columns([1, 1.45], gap="large")
 with left:

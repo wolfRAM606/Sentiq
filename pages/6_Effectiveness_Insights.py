@@ -20,9 +20,9 @@ score = kpis["effectiveness"]
 
 ui.hero("Effectiveness Insights", "From opinions to <em>actionable</em> evidence.",
         "A transparent, sentiment-derived feedback indicator with aspect-level breakdowns and deterministic "
-        "recommendations — each linked to the reviews that triggered it.",
+        "recommendations, each linked to the reviews that triggered it.",
         [(state.filter_summary(ds, reviews), ""), ("Indicator ≠ objective teaching quality", "demo")],
-        {"label": "Feedback indicator", "value": f"{score:.1f}" if score is not None else "—", "suffix": "/ 100",
+        {"label": "Feedback indicator", "value": f"{score:.1f}" if score is not None else "n/a", "suffix": "/ 100",
          "note": f"Based on {kpis['valid_reviews']} reviews' predicted sentiment."})
 
 if reviews.empty:
@@ -48,8 +48,7 @@ if n < MIN_SAMPLE_WARNING:
                "The indicator can change substantially with a few additional reviews.")
 st.info("**Interpret with care.** Student feedback may be biased, incomplete or unrepresentative (e.g. only motivated students "
         "respond), and the sentiment model makes errors (see Model Lab). This indicator summarises expressed opinion; it is "
-        "not an objective measurement of instructor quality and must not be used on its own for evaluation decisions.",
-        icon=":material/balance:")
+        "not an objective measurement of instructor quality and must not be used on its own for evaluation decisions.")
 
 ui.section("Aspect-level indicators", f"Shown only for aspects with at least {MIN_ASPECT_MENTIONS} mentioning reviews.", "01")
 eligible = summary[summary["enough_evidence"]] if len(summary) else summary

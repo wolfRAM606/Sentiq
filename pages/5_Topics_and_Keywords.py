@@ -79,7 +79,7 @@ with tab_topics:
         if unassigned:
             st.caption(f"{unassigned} reviews had no informative terms in the topic vocabulary and are unassigned.")
         for t in result.topics:
-            with st.expander(f"{t['label']} — {t['n_reviews']} reviews"):
+            with st.expander(f"{t['label']} ({t['n_reviews']} reviews)"):
                 a, b = st.columns([1, 1.4], gap="large")
                 with a:
                     st.plotly_chart(charts.topic_terms_chart(t), width="stretch", config=charts.CONFIG, key=f"topic_terms_{t['topic_id']}")

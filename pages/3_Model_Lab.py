@@ -16,7 +16,7 @@ ui.hero("Model Lab", "A classifier you can <em>inspect.</em>",
         "compared against baselines. Every number on this page is read from the saved training report.",
         [(f"Trained {report['trained_at']}" if report else "No training report", ""),
          (f"Source: {model.status.source}", ""), ("Held-out test set · never used for tuning", "live")],
-        {"label": "Held-out macro-F1 · Logistic Regression", "value": f"{primary['test']['macro_f1']:.3f}" if primary else "—",
+        {"label": "Held-out macro-F1 · Logistic Regression", "value": f"{primary['test']['macro_f1']:.3f}" if primary else "n/a",
          "note": (f"Accuracy {primary['test']['accuracy']:.3f} on {report['split']['test_rows']} unseen comments. "
                   f"Majority baseline macro-F1: {report['models']['majority_baseline']['test']['macro_f1']:.3f}.") if primary else
                  "Train the model to see results."} if primary else None)
@@ -80,12 +80,12 @@ if report:
         st.warning(f"**Honest reading of the results.** The neutral class is small ({report['dataset']['cleaning']['clean_label_counts']['neutral']} "
                    f"examples in total, {neutral['support']} in the test set) and loosely defined in the source data (many 'neutral' "
                    f"comments are suggestions or wishes), so neutral F1 is low ({neutral['f1']:.2f}). Positive vs negative "
-                   "separation is substantially better. Treat neutral predictions with particular caution.", icon=":material/info:")
+                   "separation is substantially better. Treat neutral predictions with particular caution.")
 
     with tab_data:
         clean = report["dataset"]["cleaning"]
         ds_info = report["dataset"]
-        st.markdown(f"**{ds_info['name']}** — [{ds_info['url']}]({ds_info['url']})  \nLicence: {ds_info['license']}  \n"
+        st.markdown(f"**{ds_info['name']}**, [{ds_info['url']}]({ds_info['url']})  \nLicence: {ds_info['license']}  \n"
                     f"Label mapping: {ds_info['label_mapping']}  \nFile SHA-256: `{ds_info['sha256']}`")
         k = st.columns(4)
         with k[0]:
@@ -93,7 +93,7 @@ if report:
         with k[1]:
             ui.kpi("Exact/normalised duplicates", clean["dropped_duplicate_rows"], "removed (first kept)")
         with k[2]:
-            ui.kpi("Conflicting-label rows", clean["dropped_conflicting_rows"], "same text, different labels — removed", "neg")
+            ui.kpi("Conflicting-label rows", clean["dropped_conflicting_rows"], "same text with different labels, removed", "neg")
         with k[3]:
             ui.kpi("Clean labelled rows", clean["clean_rows"], "used for train/test split", "pos")
         if clean["conflicting_label_texts"]:
@@ -112,7 +112,7 @@ if report:
 
     with tab_errors:
         st.markdown(f"**{report['misclassified_total']}** of {report['split']['test_rows']} test comments were misclassified by "
-                    "Logistic Regression. The most confident mistakes are shown first — they often reveal label noise or "
+                    "Logistic Regression. The most confident mistakes are shown first. They often reveal label noise or "
                     "sarcasm/suggestions the model cannot capture.")
         errs = pd.DataFrame([{"text": e["text"], "true label": e["true"], "predicted": e["predicted"],
                               **{f"P({c})": e["probabilities"].get(c) for c in LABELS}} for e in report["misclassified_examples"]])
@@ -147,7 +147,7 @@ with tab_try:
                     + (" &nbsp; <span class='sq-warn'>⚑ review needed</span>" if p["review_needed"] else ""), unsafe_allow_html=True)
         st.plotly_chart(charts.probability_bars({"positive": p["prob_positive"], "neutral": p["prob_neutral"],
                                                  "negative": p["prob_negative"]}), width="stretch", config=charts.CONFIG)
-        st.caption("This is a prediction on new, unlabelled text — it is separate from the held-out evaluation above.")
+        st.caption("This is a prediction on new, unlabelled text and is separate from the held-out evaluation above.")
 
 with tab_cfg:
     st.markdown("**Retrain**")

@@ -22,7 +22,7 @@ reviews, mentions = state.filtered(ds)
 
 ui.hero("Feedback Explorer", "Read the <em>evidence</em>, review by review.",
         "Upload a CSV, map its columns and analyse it with the same spaCy + Logistic Regression pipeline used everywhere in "
-        "Sentiq. Every record is accounted for — nothing is silently dropped.",
+        "Sentiq. Every record is accounted for, and nothing is silently dropped.",
         [("Synthetic demonstration data" if ds.kind == "demo" else ds.name, "demo" if ds.kind == "demo" else "live"),
          (state.filter_summary(ds, reviews), ""), (f"Uploads ≤ {MAX_UPLOAD_MB} MB · ≤ {MAX_ROWS:,} rows", "")])
 
@@ -76,7 +76,7 @@ with tab_explore:
 
         ui.section("Inspect one review", "Full transparency: probabilities, aspect evidence and the exact model input.")
         rid = st.selectbox("Record", view["record_id"].tolist(), key="fx_inspect",
-                           format_func=lambda r: f"#{r} — {view.loc[view['record_id'] == r, 'review_text'].iloc[0][:90]}")
+                           format_func=lambda r: f"#{r}: {view.loc[view['record_id'] == r, 'review_text'].iloc[0][:90]}")
         row = view[view["record_id"] == rid].iloc[0]
         i1, i2 = st.columns([1, 1.2], gap="large")
         with i1:
@@ -90,7 +90,7 @@ with tab_explore:
             st.markdown("**Detected aspects (clause-level sentiment)**")
             m = mentions[mentions["record_id"] == rid]
             if m.empty:
-                st.caption("No teaching aspect matched this review (this is different from neutral sentiment).")
+                st.caption("No teaching aspect matched this review (this is reported separately from neutral sentiment).")
             else:
                 st.dataframe(m[["aspect", "evidence", "terms", "match_type", "negated", "aspect_sentiment", "aspect_confidence"]],
                              hide_index=True, width="stretch",
@@ -129,7 +129,7 @@ with tab_upload:
                 suggested["text"] = guess_text_column(frame)
             st.markdown("**Column mapping**")
             cols = list(frame.columns)
-            none = "— not available —"
+            none = "(not available)"
             mc = st.columns(4)
             mapping = {"text": mc[0].selectbox(ROLE_LABELS["text"], cols,
                                                index=cols.index(suggested["text"]) if suggested["text"] in cols else 0,
@@ -149,7 +149,7 @@ with tab_upload:
                     bar = st.progress(0.0, text="Validating records")
                     try:
                         valid, excluded, report = prepare_dataset(frame, mapping)
-                        bar.progress(0.1, text=f"{report.valid_records} valid reviews — starting NLP pipeline")
+                        bar.progress(0.1, text=f"{report.valid_records} valid reviews. Starting the NLP pipeline")
                         result = analyze_reviews(valid, model, analyzer,
                                                  progress=lambda f, msg: bar.progress(min(max(f, 0.0), 1.0), text=msg))
                         state.set_active(state.ActiveDataset(name or up.name, "upload", valid, excluded, report, result,
@@ -195,7 +195,7 @@ with tab_single:
                            f"top probability {pred['confidence']:.0%} · margin {pred['margin']:.0%}",
                            {"positive": "pos", "neutral": "neu", "negative": "neg"}[pred["sentiment"]])
                     if pred["review_needed"]:
-                        st.warning("Low confidence: the model is unsure about this text — a human should read it.", icon=":material/flag:")
+                        st.warning("Low confidence: the model is unsure about this text, so a person should read it.")
                     st.plotly_chart(charts.probability_bars({"positive": pred["prob_positive"], "neutral": pred["prob_neutral"],
                                                              "negative": pred["prob_negative"]}), width="stretch", config=charts.CONFIG)
                 else:
@@ -236,7 +236,7 @@ with tab_quality:
     with q[3]:
         ui.kpi("Truncated long reviews", rep.truncated_reviews, "analysed up to 5,000 chars")
     st.markdown("**Column mapping used**")
-    st.dataframe(pd.DataFrame([{"role": ROLE_LABELS.get(k, k), "column": v or "—"} for k, v in rep.mapped_columns.items()]),
+    st.dataframe(pd.DataFrame([{"role": ROLE_LABELS.get(k, k), "column": v or "(none)"} for k, v in rep.mapped_columns.items()]),
                  hide_index=True, width="stretch")
     for w in rep.warnings:
         st.warning(w)

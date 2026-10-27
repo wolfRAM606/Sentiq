@@ -7,8 +7,8 @@ import re
 import pandas as pd
 import streamlit as st
 
-from src.config import ACADEMIC_TITLE, PRODUCT_DESCRIPTOR, PRODUCT_NAME
-from src.ui.theme import COLORS, SENTIMENT_COLORS
+from src.config import ACADEMIC_TITLE, PRODUCT_DESCRIPTOR, PRODUCT_NAME, ROOT
+from src.ui.theme import mode, sentiment_colors
 
 esc = html.escape
 
@@ -19,7 +19,7 @@ def _md(markup: str) -> None:
 
 def hero(eyebrow: str, title: str, subtitle: str, chips: list[tuple[str, str]] | None = None,
          feature: dict | None = None) -> None:
-    """Editorial page header. ``title`` may contain <em>…</em> (trusted, static strings only)."""
+    """Editorial page header. ``title`` may contain <em>...</em> (trusted, static strings only)."""
     chip_html = "".join(f'<span class="sq-chip {cls}">{esc(text)}</span>' for text, cls in (chips or []))
     feat = ""
     if feature:
@@ -45,20 +45,17 @@ def kpi(label: str, value, note: str = "", accent: str = "", compact: bool = Fal
 
 
 def pill(sentiment: str) -> str:
-    color = SENTIMENT_COLORS.get(sentiment, COLORS["muted"])
-    return (f'<span class="sq-pill" style="background:{color}22;color:{color};border:1px solid {color}66">'
-            f'{esc(str(sentiment))}</span>')
+    color = sentiment_colors().get(sentiment, sentiment_colors()["unavailable"])
+    return f'<span class="sq-pill" style="color:{color}"><i style="background:{color}"></i>{esc(str(sentiment))}</span>'
 
 
 def insights(items: list[dict]) -> None:
-    tone_color = {"positive": COLORS["positive"], "negative": COLORS["negative"], "neutral": COLORS["neutral"],
-                  "info": COLORS["ice"]}
     if not items:
         empty("No insights yet", "Insights appear once there are reviews in the current selection.")
         return
-    rows = "".join(f'<div class="sq-insight"><div class="bar" style="background:{tone_color.get(i["tone"], COLORS["violet"])}"></div>'
-                   f'<div>{esc(i["text"])}</div></div>' for i in items)
-    _md(f'<div class="sq-kpi" style="padding:.4rem 1rem">{rows}</div>')
+    rows = "".join(f'<div class="sq-insight"><span class="n">{i + 1:02d}</span><div>{esc(it["text"])}</div></div>'
+                   for i, it in enumerate(items))
+    _md(f'<div class="sq-insights">{rows}</div>')
 
 
 def empty(title: str, message: str) -> None:
@@ -77,47 +74,47 @@ def highlight(text: str, terms: list[str]) -> str:
 
 def review_card(row: pd.Series | dict, terms: list[str] | None = None, show_meta: bool = True, max_chars: int = 600) -> None:
     text = str(row["review_text"])
-    shown = text if len(text) <= max_chars else text[:max_chars].rsplit(" ", 1)[0] + " …"
+    shown = text if len(text) <= max_chars else text[:max_chars].rsplit(" ", 1)[0] + " ..."
     sentiment = row.get("sentiment", "unavailable")
-    color = SENTIMENT_COLORS.get(sentiment, COLORS["border"])
     meta = [pill(sentiment)]
     conf = row.get("confidence")
     if conf is not None and conf == conf:
         meta.append(f"<span>confidence {conf:.0%}</span>")
     if bool(row.get("review_needed", False)) and sentiment != "unavailable":
-        meta.append('<span class="sq-warn">⚑ review needed</span>')
+        meta.append('<span class="sq-warn">Review needed</span>')
     if row.get("aspects"):
         meta.extend(f'<span class="sq-tag">{esc(a)}</span>' for a in str(row["aspects"]).split("; "))
     if show_meta:
         for key in ("course", "instructor", "semester"):
             val = row.get(key)
             if val is not None and val == val and str(val):
-                meta.append(f"<span>· {esc(str(val))}</span>")
-        meta.append(f"<span>· #{int(row['record_id'])}</span>")
-    _md(f'<div class="sq-review" style="border-left-color:{color}"><div class="txt">{highlight(shown, terms or [])}</div>'
+                meta.append(f"<span>{esc(str(val))}</span>")
+        meta.append(f"<span>#{int(row['record_id'])}</span>")
+    _md(f'<div class="sq-review"><div class="txt">{highlight(shown, terms or [])}</div>'
         f'<div class="meta">{"".join(meta)}</div></div>')
 
 
 def recommendation_card(rec: dict) -> None:
-    color = COLORS["negative"] if rec["kind"] == "issue" else COLORS["positive"]
+    sc = sentiment_colors()
+    color = sc["negative"] if rec["kind"] == "issue" else sc["positive"]
     badge = {"high": "High priority", "medium": "Worth attention", "keep": "Strength"}[rec["priority"]]
-    examples = "".join(f'<div class="ev">“{esc(e["evidence"])}” <span style="font-style:normal">— review #{e["record_id"]}</span></div>'
+    examples = "".join(f'<div class="ev">"{esc(e["evidence"])}" <span style="font-style:normal;font-family:inherit">(review #{e["record_id"]})</span></div>'
                        for e in rec["examples"])
     caveats = " ".join(esc(c) for c in rec["caveats"])
-    _md(f'<div class="sq-rec" style="border-left:3px solid {color}"><div class="head"><div class="title">{esc(rec["headline"])}</div>'
-        f'<span class="sq-pill" style="background:{color}22;color:{color};border:1px solid {color}66">{badge}</span></div>'
+    _md(f'<div class="sq-rec"><div class="head"><div class="title">{esc(rec["headline"])}</div>'
+        f'<span class="sq-pill" style="color:{color}"><i style="background:{color}"></i>{badge}</span></div>'
         f'<div class="action"><b>Suggested action:</b> {esc(rec["action"])}</div>{examples}'
         f'<div class="cav">Evidence: {rec["supporting_reviews"]} of {rec["aspect_reviews"]} reviews mentioning '
         f'{esc(rec["aspect"])} ({rec["share"]:.0%}). {caveats}</div></div>')
 
 
 def sidebar_brand() -> None:
-    from src.config import ROOT
-
-    st.logo(str(ROOT / "static" / "sentiq_wordmark.svg"), size="large", icon_image=str(ROOT / "static" / "sentiq_mark.svg"))
+    variant = "dark" if mode() == "dark" else "light"
+    st.logo(str(ROOT / "static" / f"sentiq_wordmark_{variant}.svg"), size="large",
+            icon_image=str(ROOT / "static" / "sentiq_mark.svg"))
 
 
 def footer() -> None:
-    _md(f'<div class="sq-foot">{PRODUCT_NAME} — {esc(PRODUCT_DESCRIPTOR)} · Academic project: <i>{esc(ACADEMIC_TITLE)}</i>. '
-        "Sentiment predictions come from a trained Logistic Regression model; aspect analysis is rule-assisted. "
-        "Indicators summarise student opinion and are not objective measures of teaching quality.</div>")
+    _md(f'<div class="sq-foot">{PRODUCT_NAME} · {esc(PRODUCT_DESCRIPTOR)}<br>Academic project: <i>{esc(ACADEMIC_TITLE)}</i>.<br>'
+        "Sentiment comes from a trained Logistic Regression model and aspect analysis is rule-assisted. "
+        "The indicators summarise expressed student opinion and should be read alongside other evidence about teaching.</div>")

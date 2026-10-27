@@ -98,7 +98,7 @@ def generate_insights(reviews: pd.DataFrame, summary: pd.DataFrame) -> list[dict
                              f"({_pct(counts[dominant] / n)}) were predicted {dominant}."})
     if n < MIN_SAMPLE_WARNING:
         insights.append({"kind": "caution", "tone": "neutral",
-                         "text": f"Only {n} reviews are in the current selection — treat all patterns as indicative, not conclusive."})
+                         "text": f"Only {n} reviews are in the current selection, so treat all patterns as indicative, not conclusive."})
     best, worst = most_positive_negative(summary)
     if worst is not None:
         insights.append({"kind": "aspect", "tone": "negative",

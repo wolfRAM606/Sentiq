@@ -22,7 +22,7 @@ reviews, mentions = state.filtered(ds)
 
 ui.hero("Reports & Methodology", "Show your <em>working.</em>",
         f"Download the analysed data and a printable report, and read exactly how {PRODUCT_NAME} turns raw comments into "
-        "evidence — including what it cannot do.",
+        "evidence, including what it cannot do.",
         [(PRODUCT_NAME + " · " + PRODUCT_DESCRIPTOR, ""), (state.filter_summary(ds, reviews), "")])
 
 tab_rep, tab_method, tab_about = st.tabs(["Reports & exports", "Methodology", "About & sources"])
@@ -60,53 +60,53 @@ with tab_method:
 ### Official academic title
 **{ACADEMIC_TITLE}**
 
-Product: **{PRODUCT_NAME} — {PRODUCT_DESCRIPTOR}** · *{TAGLINE}*
+Product: **{PRODUCT_NAME} · {PRODUCT_DESCRIPTOR}**. *{TAGLINE}*
 
 ### Pipeline
-1. **Ingestion & validation** — CSV bytes are decoded (UTF-8 / UTF-8-BOM / Windows-1252 / Latin-1), the delimiter is sniffed,
+1. **Ingestion & validation**: CSV bytes are decoded (UTF-8 / UTF-8-BOM / Windows-1252 / Latin-1), the delimiter is sniffed,
    and every column is read as text so the original review is preserved. Columns are mapped to roles (review text, course,
    instructor, date, semester, rating). Empty, non-alphabetic and duplicate reviews are excluded with an explicit reason; dates
    and ratings that cannot be parsed are reported.
-2. **spaCy preprocessing** (`en_core_web_sm`) — tokenisation, lemmatisation, part-of-speech tags and sentence/dependency parses.
+2. **spaCy preprocessing** (`en_core_web_sm`): tokenisation, lemmatisation, part-of-speech tags and sentence/dependency parses.
    Generic stopwords are removed, but negators (*not, never, no, hardly, n't…*) and intensifiers are kept. Up to three content
    tokens after a negator get a `neg_` prefix, so *“not helpful”* becomes `not neg_helpful` and cannot look positive.
-3. **Sentiment classification** — a scikit-learn `Pipeline` (spaCy normaliser → TF-IDF uni/bi-grams → Logistic Regression with
+3. **Sentiment classification**: a scikit-learn `Pipeline` (spaCy normaliser → TF-IDF uni/bi-grams → Logistic Regression with
    balanced class weights) trained on a verified public labelled dataset. Baselines: majority class, Multinomial Naive Bayes,
    Linear SVM. Hyper-parameters are tuned with 5-fold stratified cross-validation on the training split only; the stratified
    20% test split is scored once.
-4. **Uncertainty** — class probabilities are shown for every prediction; predictions with top probability < 55% or a margin
+4. **Uncertainty**: class probabilities are shown for every prediction; predictions with top probability < 55% or a margin
    < 15% are flagged *review needed*. Calibration on the test set is reported in the Model Lab (no post-hoc calibration).
-5. **Aspect analysis (rule-assisted)** — sentences are split into clauses at contrastive conjunctions; a configurable lexicon
+5. **Aspect analysis (rule-assisted)**: sentences are split into clauses at contrastive conjunctions; a configurable lexicon
    (`config/aspect_taxonomy.json`) is matched on lemmas/lowercase with spaCy `PhraseMatcher`; context-dependent words need a
    supporting context word; the sentiment model is applied to the triggering clause. Unmatched and ambiguous cases are listed.
-6. **Keywords & topics** — document frequencies of lemma n-grams and spaCy noun chunks by predicted sentiment; exploratory
+6. **Keywords & topics**: document frequencies of lemma n-grams and spaCy noun chunks by predicted sentiment; exploratory
    NMF topics on TF-IDF of content lemmas (skipped when data is too small or uniform).
-7. **Insights & recommendations** — deterministic rules with minimum-evidence thresholds; each output carries counts,
+7. **Insights & recommendations**: deterministic rules with minimum-evidence thresholds; each output carries counts,
    example evidence and caveats.
 
 ### Scales
 * **Average sentiment score** = mean of P(positive) − P(negative), from −1 (all negative) to +1 (all positive).
 * **Feedback indicator** = 100 × (positive share + 0.5 × neutral share), i.e. 50% positive share + 50% negative
   complement (1 − negative share): with p + u + n = 1, 0.5p + 0.5(1 − n) = p + 0.5u. (A 70/30 weighting would give
-  100 × (p + 0.3u) instead — all-neutral feedback would score 30 rather than the midpoint 50 — so the symmetric
+  100 × (p + 0.3u) instead (all-neutral feedback would score 30 rather than the midpoint 50), so the symmetric
   50/50 form is used.)
 
 ### Limitations and appropriate use
 """ + "\n".join(f"* {l}" for l in LIMITATIONS) + """
 * Uploaded data is processed in memory and is not written to disk or logs by Sentiq.
-* Intended use: exploratory support for instructors and departments reflecting on feedback — not automated evaluation,
+* Intended use: exploratory support for instructors and departments reflecting on feedback. It is not intended for automated evaluation,
   ranking or personnel decisions.
 """)
 
 with tab_about:
-    st.markdown(f"## {PRODUCT_NAME}\n*{PRODUCT_DESCRIPTOR} — {TAGLINE}*\n\n**Academic project title:** {ACADEMIC_TITLE}")
+    st.markdown(f"## {PRODUCT_NAME}\n*{PRODUCT_DESCRIPTOR}. {TAGLINE}*\n\n**Academic project title:** {ACADEMIC_TITLE}")
     st.markdown("### Data sources")
     if report:
         dsi = report["dataset"]
-        st.markdown(f"* **Sentiment training data:** {dsi['name']} — <{dsi['url']}> — licence **{dsi['license']}**. "
+        st.markdown(f"* **Sentiment training data:** {dsi['name']}, <{dsi['url']}>, licence **{dsi['license']}**. "
                     f"{dsi['cleaning']['raw_rows']} raw labelled comments (verified), {dsi['cleaning']['clean_rows']} after cleaning. "
                     f"{dsi['label_mapping']}.")
-    st.markdown("* **Demonstration data:** `data/sample/demo_feedback.csv` — **synthetic**, written for this project; not real "
+    st.markdown("* **Demonstration data:** `data/sample/demo_feedback.csv`: **synthetic**, written for this project; not real "
                 "student feedback; never used for training or evaluation.\n"
                 "* **EduRABSA** (aspect-annotated education reviews, CC BY-NC-SA 4.0) was reviewed but not integrated: the data is "
                 "distributed separately via Zenodo in a quadruplet-extraction format that could not be integrated and validated "
@@ -116,7 +116,7 @@ with tab_about:
         {"component": "Python", "version": platform.python_version()},
         {"component": "Streamlit", "version": st.__version__},
         {"component": "spaCy", "version": spacy.__version__},
-        {"component": "spaCy model", "version": report["versions"]["spacy_model"] if report else "—"},
+        {"component": "spaCy model", "version": report["versions"]["spacy_model"] if report else "n/a"},
         {"component": "scikit-learn", "version": sklearn.__version__},
         {"component": "pandas", "version": pd.__version__},
         {"component": "Plotly", "version": plotly.__version__},

@@ -19,7 +19,7 @@ coverage = (reviews["aspect_count"] > 0).mean() if len(reviews) else 0
 ui.hero("Aspect Analysis", "What exactly are students <em>talking about?</em>",
         "A transparent, lexicon-assisted aspect component: spaCy sentences, clauses and lemmas are matched against a "
         "configurable teaching-aspect taxonomy, and sentiment is predicted for the clause that triggered each match.",
-        [("Rule-assisted · not a trained aspect model", ""), (state.filter_summary(ds, reviews), ""),
+        [("Rule-assisted lexicon matching", ""), (state.filter_summary(ds, reviews), ""),
          (f"{len(analyzer.taxonomy.aspects)} aspects in taxonomy", "")],
         {"label": "Reviews with at least one aspect", "value": f"{coverage:.0%}",
          "note": f"{int((reviews['aspect_count'] > 0).sum())} of {len(reviews)} reviews · {len(unmatched)} unmatched · "
@@ -75,7 +75,7 @@ with tab_drill:
         with k[3]:
             ui.kpi("Negative", int(row["negative"]), f"{row['negative_share']:.0%}", "neg")
         if not row["enough_evidence"]:
-            st.warning(f"Fewer than {MIN_ASPECT_MENTIONS} reviews mention this aspect — too little evidence for conclusions.")
+            st.warning(f"Fewer than {MIN_ASPECT_MENTIONS} reviews mention this aspect, which is too little evidence for conclusions.")
         st.markdown(f"**{len(m)} evidence clauses**")
         by_id = reviews.set_index("record_id")
         for r in m.sort_values("aspect_confidence", ascending=False).itertuples():
@@ -93,7 +93,7 @@ with tab_drill:
 with tab_unmatched:
     u1, u2 = st.columns(2, gap="large")
     with u1:
-        ui.section("Unmatched reviews", "No aspect term or general target was found. These are 'no aspect detected', not neutral.")
+        ui.section("Unmatched reviews", "No aspect term or general target was found. They count as 'no aspect detected', which is reported separately from neutral sentiment.")
         if unmatched.empty:
             st.caption("Every review in the selection matched at least one aspect.")
         else:

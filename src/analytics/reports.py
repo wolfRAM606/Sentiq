@@ -12,7 +12,7 @@ esc = html.escape
 
 
 def _pct(x) -> str:
-    return "—" if x is None or x != x else f"{100 * x:.0f}%"
+    return "n/a" if x is None or x != x else f"{100 * x:.0f}%"
 
 
 def build_context(dataset_name: str, dataset_kind: str, validation: dict, kpis: dict, summary: pd.DataFrame,
@@ -46,10 +46,10 @@ LIMITATIONS = [
 
 def build_markdown(ctx: dict) -> str:
     k, v = ctx["kpis"], ctx["validation"]
-    lines = [f"# {PRODUCT_NAME} feedback report", "", f"*{PRODUCT_DESCRIPTOR} — {TAGLINE}*", "",
+    lines = [f"# {PRODUCT_NAME} feedback report", "", f"*{PRODUCT_DESCRIPTOR}. {TAGLINE}*", "",
              f"Academic project: **{ACADEMIC_TITLE}**", "",
              f"- Generated: {ctx['generated']}", f"- Dataset: {ctx['dataset_name']}"
-             + (" (synthetic demonstration data — not real student feedback)" if ctx["dataset_kind"] == "demo" else ""),
+             + (" (synthetic demonstration data written for this project, not real student feedback)" if ctx["dataset_kind"] == "demo" else ""),
              f"- Selection: {ctx['filter_text']}", f"- Sentiment model: {ctx['model_status']}", "",
              "## Data quality", "",
              f"- Records in file: {v['total_records']}", f"- Valid reviews: {v['valid_records']}",
@@ -78,17 +78,17 @@ def build_markdown(ctx: dict) -> str:
         lines.append("No recommendation met the evidence thresholds for this selection.")
     for rec in ctx["recommendations"]:
         lines += [f"### {rec['headline']}", "", f"**Suggested action:** {rec['action']}", ""]
-        lines += [f"> “{e['evidence']}” — review #{e['record_id']}" for e in rec["examples"]]
+        lines += [f"> “{e['evidence']}” (review #{e['record_id']})" for e in rec["examples"]]
         lines += ["", f"*Caveats:* {' '.join(rec['caveats'])}", ""]
     if ctx["topics"]:
         lines += ["## Discovered topics (unsupervised, automatically labelled)", ""]
-        lines += [f"- {t['label']} — {t['n_reviews']} reviews; top terms: {', '.join(t['terms'][:6])}" for t in ctx["topics"]]
+        lines += [f"- {t['label']}: {t['n_reviews']} reviews; top terms: {', '.join(t['terms'][:6])}" for t in ctx["topics"]]
         lines.append("")
     tr = ctx["training"]
     if tr:
         ds = tr["dataset"]
         lines += ["## Sentiment model evaluation (held-out test set)", "",
-                  f"Training data: {ds['name']} — {ds['url']} — licence: {ds['license']}. "
+                  f"Training data: {ds['name']}, {ds['url']}, licence {ds['license']}. "
                   f"{ds['cleaning'].get('clean_rows')} labelled comments after cleaning; "
                   f"{tr['split']['train_rows']} train / {tr['split']['test_rows']} test (stratified, seed {tr['split']['random_state']}).", "",
                   "| Model | CV macro-F1 (train) | Test accuracy | Test macro-F1 |", "|---|---:|---:|---:|"]
@@ -111,7 +111,7 @@ def build_html(ctx: dict) -> str:
                        for r in ctx["summary"].itertuples())
     recs = ""
     for rec in ctx["recommendations"]:
-        ex = "".join(f"<blockquote>“{esc(e['evidence'])}” <span>— review #{e['record_id']}</span></blockquote>" for e in rec["examples"])
+        ex = "".join(f"<blockquote>“{esc(e['evidence'])}” <span>(review #{e['record_id']})</span></blockquote>" for e in rec["examples"])
         recs += (f"<div class='rec {rec['kind']}'><h3>{esc(rec['headline'])}</h3><p><b>Suggested action:</b> {esc(rec['action'])}</p>"
                  f"{ex}<p class='cav'>{esc(' '.join(rec['caveats']))}</p></div>")
     recs = recs or "<p>No recommendation met the evidence thresholds for this selection.</p>"
@@ -120,7 +120,7 @@ def build_html(ctx: dict) -> str:
     topics = ""
     if ctx["topics"]:
         topics = "<h2>Discovered topics</h2><p class='muted'>Unsupervised NMF topics with automatic labels (not human-verified categories).</p><ul>" + \
-                 "".join(f"<li><b>{esc(t['label'])}</b> — {t['n_reviews']} reviews; {esc(', '.join(t['terms'][:6]))}</li>" for t in ctx["topics"]) + "</ul>"
+                 "".join(f"<li><b>{esc(t['label'])}</b>: {t['n_reviews']} reviews; {esc(', '.join(t['terms'][:6]))}</li>" for t in ctx["topics"]) + "</ul>"
     model = ""
     tr = ctx["training"]
     if tr:
@@ -138,26 +138,26 @@ def build_html(ctx: dict) -> str:
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{PRODUCT_NAME} feedback report</title>
 <style>
-:root{{--bg:#10111B;--panel:#191B2B;--violet:#A78BFA;--lime:#D9F66F;--ice:#7DD3FC;--pos:#6EE7B7;--neg:#FB7185;--neu:#FBBF24;--text:#F4F4FA;--muted:#AAA8C3;--border:#303247}}
-body{{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;margin:0;line-height:1.55}}
-main{{max-width:960px;margin:0 auto;padding:40px 24px 64px}}
-h1,h2,h3{{font-family:'Iowan Old Style','Palatino Linotype',Georgia,serif;font-weight:600}}
-h1{{font-size:2.3rem;margin:.2rem 0}} h2{{border-bottom:1px solid var(--border);padding-bottom:.3rem;margin-top:2.2rem}}
-.eyebrow{{font-family:Consolas,monospace;color:var(--violet);letter-spacing:.14em;text-transform:uppercase;font-size:.75rem}}
-.muted,.cav{{color:var(--muted);font-size:.88rem}} a{{color:var(--ice)}}
-.kpis{{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0}}
-.kpi{{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px}}
-.kpi .l{{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}} .kpi .v{{font-size:1.6rem;font-weight:650}}
-.kpi.feat{{border-top:3px solid var(--lime)}} .kpi.feat .v{{color:var(--lime)}}
-.banner{{border:1px solid var(--neu);color:var(--neu);border-radius:8px;padding:8px 12px;font-size:.88rem}}
-table{{width:100%;border-collapse:collapse;font-size:.9rem;margin:10px 0}} th,td{{border-bottom:1px solid var(--border);padding:7px 8px;text-align:left}}
-th{{color:var(--muted);font-weight:600}} td:not(:first-child),th:not(:first-child){{text-align:right}}
-.rec{{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:4px 16px 10px;margin:12px 0}}
-.rec.issue{{border-left:3px solid var(--neg)}} .rec.strength{{border-left:3px solid var(--pos)}}
-blockquote{{margin:6px 0;border-left:2px solid var(--border);padding-left:10px;color:var(--muted);font-style:italic}}
-footer{{margin-top:40px;color:var(--muted);font-size:.8rem;border-top:1px solid var(--border);padding-top:12px}}
-@media print{{body{{background:#fff;color:#111}} .kpi,.rec{{background:#fff;border-color:#ccc}} .muted,.cav,blockquote,th,.kpi .l{{color:#444}}
- .kpi.feat .v{{color:#4a5d00}} .eyebrow{{color:#5b3fd1}} a{{color:#0b5cad}} h2{{border-color:#ccc}} th,td{{border-color:#ddd}} .banner{{color:#7a5600;border-color:#7a5600}}}}
+:root{{--bg:#F5F0E8;--surface:#EDE6DA;--rule:#D3C8B6;--text:#25242A;--muted:#625C57;--brand:#702F45;--sage:#8AAB91;--pos:#45694E;--neu:#7A5D16;--neg:#A8442F}}
+body{{background:var(--bg);color:var(--text);font-family:"IBM Plex Sans","Segoe UI",system-ui,Arial,sans-serif;margin:0;line-height:1.6}}
+main{{max-width:920px;margin:0 auto;padding:48px 28px 72px}}
+h1,h2,h3{{font-family:Fraunces,"Iowan Old Style",Georgia,serif;font-weight:500}}
+h1{{font-size:2.5rem;margin:.3rem 0;line-height:1.1}} h2{{border-top:1px solid var(--rule);padding-top:.9rem;margin-top:2.4rem;font-size:1.45rem}}
+.eyebrow{{font-family:"IBM Plex Mono",Consolas,monospace;color:var(--brand);letter-spacing:.12em;text-transform:uppercase;font-size:.74rem}}
+.muted,.cav{{color:var(--muted);font-size:.9rem}} a{{color:var(--brand)}}
+.kpis{{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0 28px;margin:22px 0}}
+.kpi{{border-top:1px solid var(--rule);padding:12px 0}}
+.kpi .l{{font-family:"IBM Plex Mono",Consolas,monospace;font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}}
+.kpi .v{{font-family:Fraunces,Georgia,serif;font-size:2rem}}
+.kpi.feat{{border-top:2px solid var(--brand)}} .kpi.feat .v{{color:var(--brand)}}
+.banner{{border:1px solid var(--neu);color:var(--neu);padding:8px 12px;font-size:.9rem}}
+table{{width:100%;border-collapse:collapse;font-size:.92rem;margin:12px 0}} th,td{{border-bottom:1px solid var(--rule);padding:8px 8px;text-align:left}}
+th{{color:var(--muted);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}} td:not(:first-child),th:not(:first-child){{text-align:right}}
+.rec{{border-top:1px solid var(--rule);padding:6px 0 12px;margin:10px 0}}
+.rec h3{{font-size:1.15rem;margin:.6rem 0}} .rec.issue h3{{color:var(--neg)}} .rec.strength h3{{color:var(--pos)}}
+blockquote{{margin:6px 0 6px 1rem;color:var(--muted);font-family:Fraunces,Georgia,serif;font-style:italic}}
+footer{{margin-top:44px;color:var(--muted);font-size:.82rem;border-top:1px solid var(--rule);padding-top:12px}}
+@media print{{body{{background:#fff}} main{{padding:0}} a{{color:#702F45}}}}
 </style></head><body><main>
 <div class="eyebrow">{PRODUCT_NAME} · {esc(PRODUCT_DESCRIPTOR)}</div>
 <h1>Course feedback report</h1>
@@ -165,9 +165,9 @@ footer{{margin-top:40px;color:var(--muted);font-size:.8rem;border-top:1px solid 
 {"<p class='banner'>This report uses the bundled <b>synthetic demonstration dataset</b>. It is not real student feedback.</p>" if demo else ""}
 <p><b>Dataset:</b> {esc(ctx['dataset_name'])} · <b>Selection:</b> {esc(ctx['filter_text'])} · <b>Model:</b> {esc(ctx['model_status'])}</p>
 <div class="kpis">
- <div class="kpi feat"><div class="l">Feedback indicator</div><div class="v">{f"{score:.1f}" if score is not None else "—"}</div><div class="muted">100 × (positive + 0.5 × neutral share) = 50% positive + 50% (1 − negative)</div></div>
+ <div class="kpi feat"><div class="l">Feedback indicator</div><div class="v">{f"{score:.1f}" if score is not None else "n/a"}</div><div class="muted">100 × (positive + 0.5 × neutral share) = 50% positive + 50% (1 − negative)</div></div>
  <div class="kpi"><div class="l">Valid reviews</div><div class="v">{k['valid_reviews']}</div></div>
- <div class="kpi"><div class="l">Avg sentiment score</div><div class="v">{f"{avg:+.2f}" if avg is not None else "—"}</div><div class="muted">P(pos) − P(neg), −1…+1</div></div>
+ <div class="kpi"><div class="l">Avg sentiment score</div><div class="v">{f"{avg:+.2f}" if avg is not None else "n/a"}</div><div class="muted">P(pos) − P(neg), −1…+1</div></div>
  <div class="kpi"><div class="l">Review needed</div><div class="v">{k['review_needed']}</div><div class="muted">low-confidence predictions</div></div>
 </div>
 <h2>Data quality</h2><p>{v['total_records']} records in file · {v['valid_records']} valid · {v['excluded_records']} excluded</p><ul>{excl}</ul>
@@ -178,5 +178,5 @@ footer{{margin-top:40px;color:var(--muted);font-size:.8rem;border-top:1px solid 
 <h2>Evidence-linked recommendations</h2>{recs}
 {topics}{model}
 <h2>Limitations</h2><ul>{lim}</ul>
-<footer>{PRODUCT_NAME} — {esc(PRODUCT_DESCRIPTOR)}. Use your browser's Print command to save this report as PDF.</footer>
+<footer>{PRODUCT_NAME} · {esc(PRODUCT_DESCRIPTOR)}. Use your browser's Print command to save this report as PDF.</footer>
 </main></body></html>"""

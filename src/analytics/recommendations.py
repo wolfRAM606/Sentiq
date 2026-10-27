@@ -1,8 +1,8 @@
 """Deterministic, evidence-linked recommendations.
 
 A recommendation is produced only when enough independent reviews support it:
-* Issue    — at least ``MIN_ASPECT_MENTIONS`` negative aspect mentions AND a negative share >= 35%.
-* Strength — at least ``MIN_ASPECT_MENTIONS`` positive aspect mentions AND a positive share >= 60%.
+* Issue: at least ``MIN_ASPECT_MENTIONS`` negative aspect mentions AND a negative share >= 35%.
+* Strength: at least ``MIN_ASPECT_MENTIONS`` positive aspect mentions AND a positive share >= 60%.
 Every recommendation carries its counts, example evidence and caveats.
 """
 from __future__ import annotations
