@@ -13,16 +13,16 @@ This is an audit trail of every commit and push made while building Sentiq.
 
 | Commit | Message | Material changes | Why |
 |---|---|---|---|
-| `08429db` | chore: establish Sentiq project structure and dependencies | `.gitignore`, `requirements.txt` (pinned, official spaCy model wheel), `.streamlit/config.toml` (Midnight theme, 10 MB upload limit), `src/config.py`, package `__init__`s | Reproducible environment and central constants |
-| `086ade4` | feat: add validated feedback ingestion and synthetic demo dataset | `src/data/loader.py`, `schema_mapping.py`, `validation.py`, `scripts/build_demo_dataset.py`, `data/sample/demo_feedback.csv` | Robust CSV ingestion that accounts for every record; synthetic demo data that is clearly labelled |
-| `4fa5fe3` | feat: implement spaCy preprocessing and supervised sentiment models | `src/nlp/preprocessing.py`, `src/models/{train,evaluate,predict}.py`, `data/training/` (CSV + GPL-3.0 licence + source README), `models/` artifact + report | Genuine supervised classifier with leak-safe CV, baselines, held-out evaluation and persistence |
-| `5759bbf` | feat: add aspect analytics, topics and evidence-linked insights | `config/aspect_taxonomy.json`, `src/nlp/{aspects,keywords}.py`, `src/analytics/{pipeline,metrics,topics,recommendations,reports}.py` | Clause-level aspect analysis, keywords, NMF topics, indicator, recommendations, reports |
-| `59c77d0` | feat: build interactive Sentiq dashboard | `app.py`, `pages/1–7`, `src/ui/{theme,charts,components,state}.py`, `static/` logo | Seven-page Streamlit product with shared filters and the Midnight Intelligence design |
-| `dae5dd8` | test: add data, NLP, model and app smoke tests | `tests/` (conftest + 4 modules) | Automated verification |
+| `c2a96fe` | chore: establish Sentiq project structure and dependencies | `.gitignore`, `requirements.txt` (pinned, official spaCy model wheel), `.streamlit/config.toml` (Midnight theme, 10 MB upload limit), `src/config.py`, package `__init__`s | Reproducible environment and central constants |
+| `b2b3ebb` | feat: add validated feedback ingestion and synthetic demo dataset | `src/data/loader.py`, `schema_mapping.py`, `validation.py`, `scripts/build_demo_dataset.py`, `data/sample/demo_feedback.csv` | Robust CSV ingestion that accounts for every record; synthetic demo data that is clearly labelled |
+| `fe3a30b` | feat: implement spaCy preprocessing and supervised sentiment models | `src/nlp/preprocessing.py`, `src/models/{train,evaluate,predict}.py`, `data/training/` (CSV + GPL-3.0 licence + source README), `models/` artifact + report | Genuine supervised classifier with leak-safe CV, baselines, held-out evaluation and persistence |
+| `7cecf15` | feat: add aspect analytics, topics and evidence-linked insights | `config/aspect_taxonomy.json`, `src/nlp/{aspects,keywords}.py`, `src/analytics/{pipeline,metrics,topics,recommendations,reports}.py` | Clause-level aspect analysis, keywords, NMF topics, indicator, recommendations, reports |
+| `208f1b8` | feat: build interactive Sentiq dashboard | `app.py`, `pages/1–7`, `src/ui/{theme,charts,components,state}.py`, `static/` logo | Seven-page Streamlit product with shared filters and the Midnight Intelligence design |
+| `ed2887f` | test: add data, NLP, model and app smoke tests | `tests/` (conftest + 4 modules) | Automated verification |
 
 **Tests before these commits:** `python -m pytest -q` → **62 passed**. The first run found one real failure: the
 column-mapping heuristic matched "sentiments" as a date column because it contains "time". The matcher was fixed
-before `086ade4` was committed, and the rerun passed.
+before `b2b3ebb` was committed, and the rerun passed.
 
 **Pushed:** no (no remote configured).
 
@@ -30,11 +30,11 @@ before `086ade4` was committed, and the rerun passed.
 
 | Commit | Message | Material changes | Why |
 |---|---|---|---|
-| `eb37ef1` | fix: polish dashboard visuals found during browser inspection | `src/ui/charts.py`, `src/ui/state.py`, `pages/6_Effectiveness_Insights.py`, `src/models/train.py`, `models/` | Browser inspection found stray "undefined" chart titles, crowded legends, clipped labels, an overflowing formula and badly ordered table columns. The training report now records the full spaCy model name; retraining reproduced identical metrics |
-| `e0e23d1` | docs: add README, methodology, architecture, dataset provenance and viva guide | `README.md`, `docs/*.md` | Setup, deployment, academic documentation |
+| `f4641c3` | fix: polish dashboard visuals found during browser inspection | `src/ui/charts.py`, `src/ui/state.py`, `pages/6_Effectiveness_Insights.py`, `src/models/train.py`, `models/` | Browser inspection found stray "undefined" chart titles, crowded legends, clipped labels, an overflowing formula and badly ordered table columns. The training report now records the full spaCy model name; retraining reproduced identical metrics |
+| `68f584a` | docs: add README, methodology, architecture, dataset provenance and viva guide | `README.md`, `docs/*.md` | Setup, deployment, academic documentation |
 
 These two commits were first created with an inaccurate message: the earlier fix commit claimed the
-column-mapping change, which was already in `086ade4`. Because they had never been pushed, they were recreated
+column-mapping change, which was already in `b2b3ebb`. Because they had never been pushed, they were recreated
 locally with accurate messages using `git reset --soft`. No published history was rewritten.
 
 **Tests:** `python -m pytest -q` → **62 passed** (after the UI fixes and retraining).
@@ -58,14 +58,14 @@ for its hash) contains:
 
 ## Push status
 
-| Date | Remote | Branch | Result | Commits included |
-|---|---|---|---|---|
-| 2026-10-27 02:02 | `origin` (https://github.com/wolfRAM606/Sentiq.git, empty before the push) | `main` → `main` (new branch, upstream set) | ✅ Succeeded. `git ls-remote origin main` = `1a55121` | `08429db` … `1a55121` (all 9 commits above) |
-| 2026-10-27 | `origin` | `main` | ✅ Succeeded (`1a55121..c8aab1a`) | `c8aab1a` docs: record GitHub push and update deployment steps |
-| 2026-10-27 | `origin` | `main` | See `git log origin/main` | `chore: normalise line endings to LF` — no content change: 8 code/doc files had picked up CRLF from Windows text-mode edits (`git diff --ignore-cr-at-eol` is empty); 62 tests passed |
+| Date | Remote | Branch | Result |
+|---|---|---|---|
+| 2026-10-27 02:02 | `origin` (https://github.com/wolfRAM606/Sentiq.git, empty before the push) | `main` (new branch, upstream set) | ✅ First push of the 9 milestone commits |
+| 2026-10-27 | `origin` | `main` | ✅ `docs: record GitHub push…` and `chore: normalise line endings to LF` |
+| 2026-10-27 | `origin` | `main` (force-push with lease) | History rewritten at the repository owner's request: trailer lines were removed from the commit messages, and code was unchanged (`git diff` between the old and new tips is empty). All hashes in this file are the post-rewrite hashes |
 
 The "Pushed: no" notes in Milestones 1–3 describe the state when each milestone was committed. All of those commits
-were included in the first push above.
+are on `origin/main`.
 
 Pushing to GitHub does **not** deploy the app. Streamlit Community Cloud deployment is a separate manual step
 (see README → Deploying). **The app has not been deployed yet.**
