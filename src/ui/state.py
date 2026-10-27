@@ -7,6 +7,7 @@ from dataclasses import dataclass
 import pandas as pd
 import streamlit as st
 
+from src.analytics.filters import NO_ASPECT, Filters, apply_filters
 from src.analytics.pipeline import AnalysisResult, analyze_reviews
 from src.config import DEMO_DATASET, TAXONOMY_PATH
 from src.data.loader import read_csv_path
@@ -120,7 +121,7 @@ def render_filters(ds: ActiveDataset) -> None:
             sb.multiselect(label, opts, key=fkey(key), placeholder="All")
     sb.multiselect("Predicted sentiment", ["positive", "neutral", "negative"], key=fkey("f_sentiment"), placeholder="All")
     aspects = [a.label for a in get_analyzer().taxonomy.aspects]
-    sb.multiselect("Mentions aspect", aspects + ["(no aspect detected)"], key=fkey("f_aspect"), placeholder="Any")
+    sb.multiselect("Mentions aspect", aspects + [NO_ASPECT], key=fkey("f_aspect"), placeholder="Any")
     sb.radio("Prediction confidence", ["All", "Confident only", "Review needed only"], key=fkey("f_confidence"), horizontal=False)
     dated = reviews["date"].dropna()
     narrowed_dates = False
@@ -135,37 +136,14 @@ def render_filters(ds: ActiveDataset) -> None:
 
 def filtered(ds: ActiveDataset) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Return (reviews, mentions) for the current filter selection. All pages use this."""
-    r = ds.result.reviews
-    m = ds.result.mentions
-    mask = pd.Series(True, index=r.index)
-    for key, col in (("f_course", "course"), ("f_instructor", "instructor"), ("f_semester", "semester")):
-        sel = st.session_state.get(fkey(key))
-        if sel:
-            mask &= r[col].astype(str).isin(sel)
-    sel = st.session_state.get(fkey("f_sentiment"))
-    if sel:
-        mask &= r["sentiment"].isin(sel)
-    sel = st.session_state.get(fkey("f_aspect"))
-    if sel:
-        want_none = "(no aspect detected)" in sel
-        labels = [s for s in sel if s != "(no aspect detected)"]
-        ids_with = set(m.loc[m["aspect"].isin(labels), "record_id"]) if labels else set()
-        aspect_mask = r["record_id"].isin(ids_with)
-        if want_none:
-            aspect_mask |= r["aspect_count"] == 0
-        mask &= aspect_mask
-    conf = st.session_state.get(fkey("f_confidence"), "All")
-    if conf == "Confident only":
-        mask &= ~r["review_needed"].astype(bool)
-    elif conf == "Review needed only":
-        mask &= r["review_needed"].astype(bool)
-    dates = st.session_state.get(fkey("f_dates"))
-    if isinstance(dates, (tuple, list)) and len(dates) == 2:
-        lo, hi = pd.Timestamp(dates[0]), pd.Timestamp(dates[1]) + pd.Timedelta(days=1)
-        mask &= r["date"].isna() | ((r["date"] >= lo) & (r["date"] < hi))
-    reviews = r[mask]
-    mentions = m[m["record_id"].isin(reviews["record_id"])]
-    return reviews, mentions
+    get = lambda k, default=None: st.session_state.get(fkey(k), default)  # noqa: E731
+    dates = get("f_dates")
+    has_range = isinstance(dates, (tuple, list)) and len(dates) == 2
+    f = Filters(course=get("f_course") or [], instructor=get("f_instructor") or [], semester=get("f_semester") or [],
+                sentiment=get("f_sentiment") or [], aspect=get("f_aspect") or [],
+                confidence={"Confident only": "confident", "Review needed only": "review"}.get(get("f_confidence", "All"), "all"),
+                date_from=dates[0] if has_range else None, date_to=dates[1] if has_range else None)
+    return apply_filters(ds.result.reviews, ds.result.mentions, f)
 
 
 def filter_summary(ds: ActiveDataset, reviews: pd.DataFrame) -> str:
