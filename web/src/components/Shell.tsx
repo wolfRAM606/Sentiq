@@ -36,13 +36,13 @@ function Header() {
   return (
     <header className="header">
       <div className="wrap">
-        <NavLink to="/" className="brand" aria-label="Sentiq home">
+        <NavLink to={{ pathname: '/', search: window.location.search }} className="brand" aria-label="Sentiq home">
           <Mark />
           Sentiq
         </NavLink>
         <nav className={`nav ${open ? 'open' : ''}`} aria-label="Main">
           {NAV.map((n) => (
-            <NavLink key={n.to} to={n.to} end={n.to === '/'} className={({ isActive }) => (isActive ? 'active' : '')}>
+            <NavLink key={n.to} to={{ pathname: n.to, search: window.location.search }} end={n.to === '/'} className={({ isActive }) => (isActive ? 'active' : '')}>
               {n.label}
             </NavLink>
           ))}

@@ -431,9 +431,12 @@ def validation(did: str):
 @app.get("/api/datasets/{did}/export/{kind}")
 def export(did: str, kind: str, course: FilterArgs["course"] = None, instructor: FilterArgs["instructor"] = None,
            semester: FilterArgs["semester"] = None, sentiment: FilterArgs["sentiment"] = None, aspect: FilterArgs["aspect"] = None,
-           confidence: str = "all", date_from: date | None = None, date_to: date | None = None):
+           confidence: str = "all", date_from: date | None = None, date_to: date | None = None, q: str = ""):
     ds = dataset(did)
     _, reviews, mentions = selected(ds, course, instructor, semester, sentiment, aspect, confidence, date_from, date_to)
+    if q.strip():  # the Explore page exports exactly the reviews its search shows
+        reviews = reviews[reviews["review_text"].str.contains(q.strip(), case=False, regex=False, na=False)]
+        mentions = mentions[mentions["record_id"].isin(reviews["record_id"])]
     if kind == "reviews.csv":
         body, mime = export_frame(reviews).to_csv(index=False), "text/csv"
     elif kind == "mentions.csv":

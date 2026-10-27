@@ -14,7 +14,7 @@ export default function Aspects() {
   const q = useQuery({ queryKey: ['aspects', datasetId, filters], queryFn: () => api.aspects(datasetId, filters) })
   const meta = useQuery({ queryKey: ['meta'], queryFn: api.meta, staleTime: Infinity })
   const summary = q.data?.summary ?? []
-  const [selected, setSelected] = useState<string | null>(params.get('aspect'))
+  const [selected, setSelected] = useState<string | null>(params.get('focus'))
   const [clause, setClause] = useState<string[]>([])
   useEffect(() => {
     if (summary.length && (!selected || !summary.some((s) => s.aspect_id === selected))) setSelected(summary[0].aspect_id)
@@ -29,7 +29,7 @@ export default function Aspects() {
   const choose = (id: string) => {
     setSelected(id)
     setClause([])
-    params.set('aspect', id)
+    params.set('focus', id) // not 'aspect', which is the global aspect filter
     setParams(params, { replace: true })
     document.getElementById('evidence')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }

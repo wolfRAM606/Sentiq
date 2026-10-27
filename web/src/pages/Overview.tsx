@@ -112,7 +112,7 @@ export default function Overview() {
                         neutral: a.neutral,
                         negative: a.negative,
                         value: pct(a.positive_share) + ' pos',
-                        onClick: () => nav(`/aspects?aspect=${a.aspect_id}`),
+                        onClick: () => nav(`/aspects?focus=${a.aspect_id}`),
                       }))}
                     />
                   ) : (

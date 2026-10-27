@@ -244,5 +244,5 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ mapping, name }),
     }),
-  exportUrl: (id: string, kind: string, f: Filters) => `/api/datasets/${id}/export/${kind}${filterParams(f)}`,
+  exportUrl: (id: string, kind: string, f: Filters, q = '') => `/api/datasets/${id}/export/${kind}${filterParams(f, { q: q.trim() || undefined })}`,
 }

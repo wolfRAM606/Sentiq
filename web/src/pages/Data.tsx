@@ -22,20 +22,6 @@ export default function Data() {
   const fileRef = useRef<HTMLInputElement>(null)
   const ref = useReveal<HTMLDivElement>([info, validation.data])
 
-  const upload = useMutation({
-    mutationFn: (f: File) => {
-      const maxMb = meta.data?.limits.max_upload_mb ?? 10
-      if (f.size > maxMb * 1024 * 1024) return Promise.reject(new Error(`The file is larger than the ${maxMb} MB limit.`))
-      return api.upload(f)
-    },
-    onSuccess: (r) => {
-      setInfo(r)
-      setMapping(r.suggested_mapping)
-      setName(r.filename)
-      setDone(null)
-    },
-    onError: () => setInfo(null),
-  })
   const analyse = useMutation({
     mutationFn: () => api.analyzeUpload(info!.upload_id, mapping, name),
     onSuccess: (s) => {
@@ -46,6 +32,21 @@ export default function Data() {
     },
   })
 
+  const upload = useMutation({
+    mutationFn: (f: File) => {
+      const maxMb = meta.data?.limits.max_upload_mb ?? 10
+      if (f.size > maxMb * 1024 * 1024) return Promise.reject(new Error(`The file is larger than the ${maxMb} MB limit.`))
+      return api.upload(f)
+    },
+    onSuccess: (r) => {
+      analyse.reset() // drop any error left over from analysing a previous file
+      setInfo(r)
+      setMapping(r.suggested_mapping)
+      setName(r.filename)
+      setDone(null)
+    },
+    onError: () => setInfo(null),
+  })
   const roles = meta.data?.roles ?? []
   const used = Object.values(mapping).filter(Boolean) as string[]
   const duplicate = used.length !== new Set(used).size

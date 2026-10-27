@@ -207,7 +207,7 @@ export default function Explore() {
                 { value: 'uncertain', label: 'Least confident' },
               ]} />
             </div>
-            <a className="btn ghost" href={api.exportUrl(datasetId, 'reviews.csv', filters)} download data-testid="download-csv">Download analysed CSV</a>
+            <a className="btn ghost" href={api.exportUrl(datasetId, 'reviews.csv', filters, debounced)} download data-testid="download-csv">{debounced.trim() ? 'Download these reviews (CSV)' : 'Download analysed CSV'}</a>
           </div>
           {list.error && <ErrorNote error={list.error} />}
           {list.isLoading && <Loading what="Loading reviews" />}

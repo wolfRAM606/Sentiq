@@ -112,6 +112,8 @@ def test_exports_follow_filters():
     assert "An Automated Text Mining Dashboard" in html and "<script" not in html.lower()
     md = client.get("/api/datasets/demo/export/report.md", params={"course": "CS305 Machine Learning"}).text
     assert "Selection: 22 of 84 valid reviews" in md
+    searched = list(csv.DictReader(io.StringIO(client.get("/api/datasets/demo/export/reviews.csv", params={"q": "assignment"}).text)))
+    assert len(searched) == 8 and all("assignment" in x["review_text"].lower() for x in searched)
     assert client.get("/api/datasets/demo/export/nope").status_code == 404
 
 
