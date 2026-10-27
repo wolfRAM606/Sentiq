@@ -1,0 +1,11 @@
+.git
+.venv
+.claude
+**/__pycache__
+.pytest_cache
+web/node_modules
+web/dist
+static/testdata
+tests
+docs
+*.log

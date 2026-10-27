@@ -1,4 +1,4 @@
-# Architecture — Sentiq
+# Sentiq: architecture
 
 Sentiq is a single Python/Streamlit application. It has no separate frontend, API server or database. All
 processing runs in the Streamlit process, and no external API is needed at runtime.
@@ -62,3 +62,27 @@ processing runs in the Streamlit process, and no external API is needed at runti
 Streamlit Community Cloud with Python 3.11 and `requirements.txt` (pinned versions plus the official
 `en_core_web_sm` wheel). The model artifact is 75 KB and committed. It was created with scikit-learn 1.8.0, which
 is pinned. If the artifact cannot be unpickled, the app retrains in about 10 seconds from the bundled dataset.
+
+## Web interface (v2)
+
+```
+browser ── React + TypeScript (web/) ── fetch /api/... ──► FastAPI (api/main.py) ──► src/ (same core as Streamlit)
+            GSAP ScrollTrigger + Lenis (scroll motion)          api/store.py: in-memory uploads (30 min expiry)
+            React Three Fiber (3D field, 3D confusion matrix)    and datasets (at most 30, least recently used first)
+            TanStack Query (requests), zustand (filters in URL)  FastAPI also serves web/dist as a single-page app
+```
+
+* **One engine.** The API calls `analyze_reviews`, `apply_filters`, `aspect_summary`, `build_recommendations`,
+  `discover_topics`, `export_frame` and the report builders, exactly as the Streamlit pages do. Filtering was moved
+  into `src/analytics/filters.py`, and CSV export rules into `src/analytics/exports.py`, so neither interface has its
+  own copy.
+* **Filters** live in the URL (`?course=...&confidence=...`), so a view can be reloaded or shared, and every
+  request carries them. Page-specific parameters (`focus`, `term`, `review`) use names that cannot collide with filter names.
+* **Privacy.** Uploads are parsed in memory, never written to disk, and expire. The unhandled-error handler returns
+  a generic message, so stack traces and review text are never sent to the client.
+* **3D views are data.** The overview field places every review by sentiment score (x), model confidence (y) and
+  aspect lane (z). The Model page extrudes the held-out confusion matrix. Labels are plain HTML positioned by projecting
+  3D anchors each frame.
+* **Motion** is scroll-triggered (reveals, count-ups, bars growing in) and fully disabled under `prefers-reduced-motion`.
+* **Deployment:** a two-stage `Dockerfile` (Node build, then a Python 3.11 runtime) suits any Docker host. The
+  Streamlit app continues to deploy on Streamlit Community Cloud from the same repository.

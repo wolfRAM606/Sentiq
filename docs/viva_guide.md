@@ -1,7 +1,7 @@
-# Viva guide — Sentiq
+# Sentiq: viva guide
 
 **Title:** An Automated Text Mining Dashboard for Evaluating Course Feedback and Teaching Effectiveness Reviews using spaCy and Streamlit
-**Product:** Sentiq — NLP-Powered Course Feedback Intelligence (*Every response tells a story.*)
+**Product:** Sentiq · NLP-Powered Course Feedback Intelligence (*Every response tells a story.*)
 
 ## 60-second pitch
 

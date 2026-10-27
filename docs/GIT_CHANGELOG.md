@@ -1,4 +1,4 @@
-# Git changelog — Sentiq
+# Sentiq: Git changelog
 
 This is an audit trail of every commit and push made while building Sentiq.
 
@@ -9,7 +9,7 @@ This is an audit trail of every commit and push made while building Sentiq.
 * At the start there was no remote. `origin` = <https://github.com/wolfRAM606/Sentiq.git> was added on 2026-10-27, once the user provided the URL. See "Push status" below.
 * Commit author: the machine's global Git identity `R.Sriram <sriram.r.work@gmail.com>`, which the user has confirmed is the correct author for this project.
 
-## Milestone 1 — Foundation, data, NLP/ML, analytics, UI, tests (2026-10-27 01:33)
+## Milestone 1: Foundation, data, NLP/ML, analytics, UI, tests (2026-10-27 01:33)
 
 | Commit | Message | Material changes | Why |
 |---|---|---|---|
@@ -26,7 +26,7 @@ before `b2b3ebb` was committed, and the rerun passed.
 
 **Pushed:** no (no remote configured).
 
-## Milestone 2 — Visual polish and documentation (2026-10-27 01:44)
+## Milestone 2: Visual polish and documentation (2026-10-27 01:44)
 
 | Commit | Message | Material changes | Why |
 |---|---|---|---|
@@ -40,7 +40,7 @@ locally with accurate messages using `git reset --soft`. No published history wa
 **Tests:** `python -m pytest -q` → **62 passed** (after the UI fixes and retraining).
 **Pushed:** no (no remote configured).
 
-## Milestone 3 — Deployment hardening, formula documentation, status files
+## Milestone 3: Deployment hardening, formula documentation, status files
 
 The commit that adds this section (`chore: pin deployment dependencies and add status and changelog`; see `git log`
 for its hash) contains:

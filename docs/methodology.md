@@ -1,8 +1,8 @@
-# Methodology — Sentiq
+# Sentiq: methodology
 
 **Academic project title:** An Automated Text Mining Dashboard for Evaluating Course Feedback and Teaching Effectiveness Reviews using spaCy and Streamlit
 
-**Product:** Sentiq — NLP-Powered Course Feedback Intelligence · *Every response tells a story.*
+**Product:** Sentiq · NLP-Powered Course Feedback Intelligence · *Every response tells a story.*
 
 ## 1. Objective
 

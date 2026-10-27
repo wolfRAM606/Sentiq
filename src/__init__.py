@@ -1,1 +1,1 @@
-"""Sentiq — NLP-Powered Course Feedback Intelligence."""
+"""Sentiq · NLP-Powered Course Feedback Intelligence."""

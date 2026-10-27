@@ -1,4 +1,4 @@
-# Implementation status — Sentiq
+# Sentiq: implementation status
 
 *Last updated: 2026-10-27*
 
@@ -14,6 +14,8 @@
 | 6 Exports & docs | ✅ Done | CSV / Markdown / HTML exports; README, methodology, architecture, provenance, viva guide, changelog |
 | 7b Full browser test pass | ✅ Done | 113-check plan (`docs/TEST_PLAN.md`) run against the live app; 5 defects found and fixed; results in `docs/TEST_RESULTS.md`. Frozen as tag `v1.0-streamlit` / branch `release/v1-streamlit` |
 | 7 Testing & hardening | ✅ Done | 62 pytest tests passing; upload → analysis tested in the browser; small-data states checked; clean-venv install verified (see below) |
+| 9 Redesign (Streamlit) | ✅ Done | Ivory, Burgundy and Sage design system (`docs/DESIGN_SYSTEM.md`) with light and dark themes, self-hosted fonts, no em dashes or banned patterns |
+| 10 Web interface (v2) | ✅ Done | FastAPI over the shared core plus a React, GSAP and Three.js interface; full browser test pass with 6 defects found and fixed (`docs/TEST_RESULTS.md`) |
 | 8 Delivery | ⚠️ Partial | All work committed on `main` and **pushed** to https://github.com/wolfRAM606/Sentiq (2026-10-27). **Not deployed** to Streamlit Cloud |
 
 ## Measured results (from `models/training_report.json`)
@@ -24,7 +26,7 @@
 
 ## Verification performed
 
-* `python -m pytest -q` → **70 passed** (was 62 before the full test pass added regression tests) (data, NLP, model, analytics/export, and Streamlit AppTest for all 7 pages,
+* `python -m pytest -q` → **79 passed** (62 originally, plus regression tests from the v1 test pass and 9 web API tests) (data, NLP, model, analytics/export, and Streamlit AppTest for all 7 pages,
   filters, empty selections and single-review analysis).
 * App launched locally (`streamlit run app.py`). All 7 pages rendered in the in-app browser with no exceptions and
   no server warnings.
@@ -40,12 +42,12 @@
 * File downloads were verified by unit tests of the export content, not by clicking download buttons in the browser.
 * Model performance is modest, especially for the neutral class (see methodology).
 * No aspect-level accuracy: there is no aspect-annotated evaluation data.
-* Light theme toggle not implemented (optional in the brief). Dark mode only.
 * Specification inconsistency resolved by the user: the brief's "70/30" wording would give 100 × (p + 0.3·u), not the
   stated 100 × (p + 0.5·u). The user chose to keep 100 × (p + 0.5·u), documented as 50% positive share + 50% negative
   complement, with the derivation in `docs/methodology.md`.
 
 ## Exact next actions for the user
 
-1. Deploy on <https://share.streamlit.io>: repository `wolfRAM606/Sentiq`, branch `main`, main file `app.py`, Python 3.11 (under Advanced settings).
+1. Streamlit app: on <https://share.streamlit.io>, delete the app that was created with Python 3.14 and redeploy it from `wolfRAM606/Sentiq`, branch `main`, main file `app.py`, choosing **Python 3.11** under Advanced settings.
+3. Web interface (optional): deploy the `Dockerfile` on Render or Hugging Face Spaces. It has not been built here, because Docker Desktop was not running.
 2. After it deploys, add the app URL to the GitHub repository's Website field and the README.

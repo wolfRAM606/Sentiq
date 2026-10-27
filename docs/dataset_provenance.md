@@ -1,4 +1,4 @@
-# Dataset provenance — Sentiq
+# Sentiq: dataset provenance
 
 ## 1. Sentiment training data (real, public, labelled)
 

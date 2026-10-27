@@ -127,3 +127,50 @@ aspect mentions, 5 excluded rows), L2 preview, L3 methodology title, formula, so
 | M4 | Pass | 5,000 reviews analysed (4,998 valid); 10,000 uncached in 20.4 s |
 | M5 | Pass | No review text anywhere in the server log |
 | M6 | Pass | A second tab gets its own demo dataset while the first keeps its upload |
+
+---
+
+# Sentiq v2 (web interface): test results
+
+Run on 2026-10-27 against the same plan, adapted to the web interface (`uvicorn api.main:app`, built from `web/`).
+Every check was done in a real browser by uploading fixture files, typing, selecting, clicking, pressing keys and
+fetching the files that download links serve. Expected values are the same independent Python calculations used for v1.
+API behaviour is also covered by `tests/test_api.py` (9 tests).
+
+**Defects found and fixed during this pass: 6. Automated suite after fixes: 79 passed.**
+
+| # | Found by | Defect | Fix | Re-test |
+|---|---|---|---|---|
+| 1 | B10 | After a failed analysis, its error message stayed under the next file's mapping step | The analysis state resets when a new file is read | Pass |
+| 2 | F (URL) | Navigating between pages dropped `?dataset=` and filter parameters, so a reload lost them | Navigation keeps the current query string | Pass |
+| 3 | G5 | "Download analysed CSV" ignored the search box (exported 84 rows while 8 were shown) | The export endpoint accepts the search text; the button reads "Download these reviews (CSV)" when searching | Pass (8 rows; new API assertion) |
+| 4 | J/I (URL) | The Aspects page used `?aspect=` for the open aspect, which collides with the global aspect filter; reloading showed 0 reviews | Renamed to `?focus=` | Pass (reload and overview link) |
+| 5 | H (visual) | The 3D confusion-matrix labels overlapped at the original camera angle | Reframed camera and label anchors | Pass |
+| 6 | M2 | drei `<Html>` labels mounted unreliably (one or all missing; React `removeChild` errors in the console) | Replaced with HTML labels projected from 3D each frame; drei removed | Pass (all six labels inside the stage; console clean) |
+
+## Results by area (web)
+
+| Area | Result | Key evidence |
+|---|---|---|
+| A startup and theme | Pass | Demo loads with the synthetic notice; Light/Dark switch changes the tokens (dark `#1D1B1F`) and persists in localStorage; unknown route shows the 404 page |
+| B ingestion | Pass | Empty, header-only, malformed, binary, duplicate-header and over-10 MB files each give a specific error; UTF-8, BOM, cp1252 and `;` tab `|` detected; kitchen-sink file 14 rows, 10 valid, 4 excluded with reasons and warnings; alternative headers auto-mapped; remapping works; double mapping blocks Analyse; numeric-only text column is rejected and the active dataset is kept; 12,000 rows truncated to 10,000; 5,000 reviews analysed in 3.9 s |
+| C NLP | Pass | Single-comment box: two clause-level aspects; ambiguous "clear" listed; unrelated text has no aspect; processed text shows `neg_` |
+| D model | Pass | Model page equals `training_report.json` (0.529 / 0.653 / ECE 0.062 / confusion matrix / all four models); class switch, error filter and "try the model" (Negative 93%) work |
+| E overview | Pass | 66.1; 53/5/26; 84; +0.16; 27 flagged; 83 with an aspect; most positive/negative aspect; all 7 insights word for word; 12 aspect rows; trend total 84 |
+| F filters | Pass | Course 22 (63.6), instructor 20 (75.0), semester 42 (51.2), neutral 5 (50.0), pace 9 (50.0), no aspect 1, confident 57 (69.3), review 27 (59.3), date range 42 (81.0): all equal v1 and the independent values; tokens remove one filter; Clear works; zero-result selection shows empty states on every page; filters survive a page reload; a new dataset clears them; exports follow them (22 rows) |
+| G explore | Pass | Search 8; four sort orders; paging 20 → 40; inspector for #12 equals the pipeline; search-aware CSV; deep link `?review=12` |
+| 3D field | Pass | Real mouse hover on a block showed "Review #18 · negative · confidence 81% · Course materials & resources"; clicking opened review #18 ("The resources shared were outdated…") |
+| I aspects | Pass | All 12 rows and indicators equal v1; keyboard Enter on a row opens its evidence (9 clauses; 4 negative); full review expands; 1 unmatched, 7 ambiguous, 12 taxonomy entries |
+| J topics | Pass | Top terms, bigrams, minimum reviews 5 gives 9 terms, top-N 10, generic toggle, "exam" gives 5 reviews, noun phrases, k = 2…8 topic sizes equal the independent values |
+| K insights | Pass | Formula text and 66.1; minimum-sample warning at 22; course and semester group tables; Fall 2025 withholds every course indicator; recommendations 11 / 5 / 6; the same 28 evidence ids as v1 |
+| L method | Pass | Five downloads (84-row CSV, HTML report in the new palette with the academic title and no scripts, Markdown with 11 recommendations and no em dashes, 120 mentions, 5 excluded); academic title, formula, source and licence shown |
+| M cross-cutting | Pass | 375 px: no horizontal overflow on any of the 8 pages, mobile menu opens and closes; dark mode checked visually; clean console in a fresh session (only a library deprecation notice); no review text in the server log. The only server tracebacks are Windows asyncio `WinError 10054` notices when the browser aborts a request, which is not Sentiq code |
+| Clean environment | Pass | `npm ci` + build from the lockfile in a scratch copy; API from a fresh Python 3.11 venv serves the app and the demo numbers |
+
+## Not verified
+
+* `prefers-reduced-motion`: the code path exists (animations and auto-rotation are skipped), but the browser tool
+  cannot emulate the setting, so it was not observed.
+* The Docker image: Docker Desktop was not running, so `docker build` was not executed. Each step it runs
+  (`npm ci && npm run build`, `pip install -r requirements.txt`, `uvicorn api.main:app`) was verified separately as above.
+* Hosting the web version on a public server (Render or Hugging Face Spaces) has not been done.
