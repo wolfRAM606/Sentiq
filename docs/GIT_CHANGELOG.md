@@ -69,12 +69,28 @@ for its hash) contains:
 **Frozen as v1:** tag `v1.0-streamlit` and branch `release/v1-streamlit` point at the commit that adds this section.
 Use either to roll back to the tested Streamlit version.
 
+## Milestone 5: redesign and web interface (2026-10-27)
+
+| Commit | Message | Material changes | Why |
+|---|---|---|---|
+| `094ec5e` | refactor: move filtering into a shared src/analytics/filters module | `src/analytics/filters.py`, `src/ui/state.py` | One filter implementation for both interfaces |
+| `1b54f98` | feat: Ivory, Burgundy and Sage design system for the Streamlit app | `.streamlit/config.toml`, `src/ui/*`, `pages/*`, `static/`, `docs/DESIGN_SYSTEM.md` | Owner's design system; light and dark themes; avoid-list respected |
+| `dccaa9f` | feat: web API over the shared NLP/ML core | `api/`, `src/analytics/exports.py`, `tests/test_api.py`, `requirements.txt` | Backend for the new interface without duplicating logic |
+| `fab3ea0` | feat: animated editorial web interface (React, GSAP, Three.js) | `web/` | Engaging multi-section UI requested by the owner |
+| `291d966` | fix: defects found in the web interface test pass | `api/main.py`, `web/src/*` | Six defects from the browser test pass (see TEST_RESULTS.md) |
+| `e958361` | docs: user guide, web test results, Docker deployment and README for both interfaces | `README.md`, `docs/*`, `Dockerfile` | Documentation and deployment path |
+
+**Tests:** 79 passed. Web browser test pass recorded in `docs/TEST_RESULTS.md`.
+**v1 preserved:** tag `v1.0-streamlit` and branch `release/v1-streamlit` still point at the pre-redesign commit `06eba43`.
+
 ## Push status
 
 | Date | Remote | Branch | Result |
 |---|---|---|---|
 | 2026-10-27 02:02 | `origin` (https://github.com/wolfRAM606/Sentiq.git, empty before the push) | `main` (new branch, upstream set) | ✅ First push of the 9 milestone commits |
 | 2026-10-27 | `origin` | `main` | ✅ `docs: record GitHub push…` and `chore: normalise line endings to LF` |
+| 2026-10-27 | `origin` | `main`, `release/v1-streamlit`, tag `v1.0-streamlit` | ✅ v1 freeze (`06eba43`) |
+| 2026-10-27 | `origin` | `main` | Milestone 5 commits plus this changelog entry (see `git log origin/main`) |
 | 2026-10-27 | `origin` | `main` (force-push with lease) | History rewritten at the repository owner's request: trailer lines were removed from the commit messages, and code was unchanged (`git diff` between the old and new tips is empty). All hashes in this file are the post-rewrite hashes |
 
 The "Pushed: no" notes in Milestones 1–3 describe the state when each milestone was committed. All of those commits
