@@ -1,0 +1,52 @@
+/* Sentiq design tokens: Ivory, Burgundy and Sage. Canonical values: docs/DESIGN_SYSTEM.md */
+:root,
+[data-theme='light'] {
+  --bg: #f5f0e8;
+  --surface: #ede6da;
+  --surface-2: #e5dccc;
+  --rule: #d3c8b6;
+  --text: #25242a;
+  --muted: #625c57;
+  --brand: #702f45;
+  --brand-ink: #f5f0e8;
+  --brand-tint: rgba(112, 47, 69, 0.08);
+  --sage: #8aab91;
+  --sage-text: #45694e;
+  --pos: #45694e;
+  --neu: #7a5d16;
+  --neg: #a8442f;
+  --pos-fill: #6f9a79;
+  --neu-fill: #c49a3a;
+  --neg-fill: #c0634c;
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --bg: #1d1b1f;
+  --surface: #26232a;
+  --surface-2: #302c34;
+  --rule: #3d3842;
+  --text: #efe8dc;
+  --muted: #aba399;
+  --brand: #d08aa0;
+  --brand-ink: #1d1b1f;
+  --brand-tint: rgba(208, 138, 160, 0.12);
+  --sage: #8aab91;
+  --sage-text: #9dbda3;
+  --pos: #9dbda3;
+  --neu: #d9b66a;
+  --neg: #e58c73;
+  --pos-fill: #8aab91;
+  --neu-fill: #d9b66a;
+  --neg-fill: #e58c73;
+  color-scheme: dark;
+}
+
+:root {
+  --font-display: 'Fraunces Variable', Fraunces, 'Iowan Old Style', Georgia, serif;
+  --font-body: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', Consolas, 'SFMono-Regular', monospace;
+  --gutter: clamp(16px, 4vw, 56px);
+  --max: 1240px;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
