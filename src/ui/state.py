@@ -7,6 +7,7 @@ from dataclasses import dataclass
 import pandas as pd
 import streamlit as st
 
+from src.analytics.exports import export_frame  # noqa: F401  (re-exported for pages)
 from src.analytics.filters import NO_ASPECT, Filters, apply_filters
 from src.analytics.pipeline import AnalysisResult, analyze_reviews
 from src.config import DEMO_DATASET, TAXONOMY_PATH
@@ -149,21 +150,6 @@ def filtered(ds: ActiveDataset) -> tuple[pd.DataFrame, pd.DataFrame]:
 def filter_summary(ds: ActiveDataset, reviews: pd.DataFrame) -> str:
     total = len(ds.result.reviews)
     return f"{len(reviews)} of {total} valid reviews" if len(reviews) != total else f"all {total} valid reviews"
-
-
-def export_frame(reviews: pd.DataFrame) -> pd.DataFrame:
-    """Analysed reviews for CSV export (original text preserved, list columns flattened)."""
-    cols = ["record_id", "review_text", "sentiment", "confidence", "review_needed", "aspects",
-            "prob_positive", "prob_neutral", "prob_negative", "sentiment_score",
-            "course", "instructor", "semester", "date", "rating", "source_label", "evidence_terms", "processed_text"]
-    optional_meta = {"course", "instructor", "semester", "date", "rating", "source_label"}
-    out = reviews[[c for c in cols if c in reviews.columns
-                   and not (c in optional_meta and reviews[c].isna().all())]].copy()
-    out["date"] = out["date"].dt.strftime("%Y-%m-%d") if "date" in out and pd.api.types.is_datetime64_any_dtype(out["date"]) else out.get("date")
-    for c in ("prob_positive", "prob_neutral", "prob_negative", "confidence", "sentiment_score"):
-        if c in out:
-            out[c] = out[c].round(4)
-    return out
 
 
 @st.cache_data(show_spinner="Discovering topics…", max_entries=32)
