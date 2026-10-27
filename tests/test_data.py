@@ -35,6 +35,12 @@ def test_invalid_csv_handling(raw, fragment):
     assert fragment in str(err.value).lower()
 
 
+def test_duplicate_column_names_rejected():
+    with pytest.raises(DataLoadError) as err:
+        read_csv_bytes(b"review,review,course\na,b,c\n")
+    assert "duplicate column names (review)" in str(err.value)
+
+
 def test_size_and_row_limits():
     with pytest.raises(DataLoadError):
         read_csv_bytes(b"x" * 2048, max_mb=0.001)

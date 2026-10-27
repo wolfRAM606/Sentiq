@@ -208,10 +208,14 @@ with tab_single:
                     ev = list(dict.fromkeys(m.evidence for m in found.matches))
                     ep = model.predict(ev)
                     ep.index = ev
-                    st.dataframe(pd.DataFrame([{"aspect": m.aspect_label, "evidence": m.evidence, "terms": ", ".join(m.terms),
-                                                "match type": m.match_type, "negated": m.negated,
-                                                "clause sentiment": ep.loc[m.evidence, "sentiment"]} for m in found.matches]),
-                                 hide_index=True, width="stretch")
+                    rows = pd.DataFrame([{"aspect": m.aspect_label, "evidence": m.evidence, "terms": ", ".join(m.terms),
+                                          "match type": m.match_type, "negated": m.negated,
+                                          "clause sentiment": ep.loc[m.evidence, "sentiment"],
+                                          "confidence": float(ep.loc[m.evidence, "confidence"])} for m in found.matches])
+                    # one row per aspect, keeping its most confident clause (same rule as dataset analysis)
+                    rows = rows.sort_values("confidence", ascending=False).drop_duplicates("aspect")
+                    st.dataframe(rows, hide_index=True, width="stretch",
+                                 column_config={"confidence": st.column_config.NumberColumn(format="%.2f")})
                 if found.ambiguous:
                     st.caption("Ambiguous words without supporting context: " +
                                ", ".join(f"'{a['term']}' ({a['aspect_label']})" for a in found.ambiguous))

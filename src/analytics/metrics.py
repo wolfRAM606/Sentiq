@@ -116,12 +116,14 @@ def generate_insights(reviews: pd.DataFrame, summary: pd.DataFrame) -> list[dict
     no_aspect = int((reviews["aspect_count"] == 0).sum())
     if no_aspect:
         insights.append({"kind": "coverage", "tone": "info",
-                         "text": f"{no_aspect} reviews ({_pct(no_aspect / n)}) did not match any teaching aspect in the lexicon; "
-                                 "they are listed as unmatched on the Aspect Analysis page."})
+                         "text": f"{no_aspect} {'review' if no_aspect == 1 else 'reviews'} ({_pct(no_aspect / n)}) did not match any "
+                                 f"teaching aspect in the lexicon; {'it is' if no_aspect == 1 else 'they are'} listed as unmatched "
+                                 "on the Aspect Analysis page."})
     rn = int(reviews["review_needed"].sum())
     if rn:
         insights.append({"kind": "uncertainty", "tone": "neutral",
-                         "text": f"{rn} predictions ({_pct(rn / n)}) are low-confidence and flagged for human review."})
+                         "text": f"{rn} {'prediction' if rn == 1 else 'predictions'} ({_pct(rn / n)}) "
+                                 f"{'is' if rn == 1 else 'are'} low-confidence and flagged for human review."})
     if reviews["date"].notna().sum() >= 10:
         dated = reviews.dropna(subset=["date"]).sort_values("date")
         half = len(dated) // 2

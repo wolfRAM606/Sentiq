@@ -63,6 +63,15 @@ def read_csv_bytes(raw: bytes, max_rows: int = MAX_ROWS, max_mb: float = MAX_UPL
     if not text.strip():
         raise DataLoadError("The uploaded file contains no data.")
     delimiter = _sniff_delimiter(text)
+    # pandas silently renames repeated headers ("review", "review.1"), so check the raw header row first
+    try:
+        header = next(csv.reader(io.StringIO(text), delimiter=delimiter))
+    except (csv.Error, StopIteration):
+        header = []
+    names = [h.strip() for h in header if h.strip()]
+    if len(names) != len(set(names)):
+        dupes = sorted({n for n in names if names.count(n) > 1})
+        raise DataLoadError(f"The CSV has duplicate column names ({', '.join(dupes)}). Please rename them so each is unique.")
     try:
         frame = pd.read_csv(
             io.StringIO(text),

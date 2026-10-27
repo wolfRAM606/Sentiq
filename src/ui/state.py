@@ -79,10 +79,21 @@ def load_demo() -> ActiveDataset:
     return ActiveDataset("Synthetic demonstration dataset", "demo", valid, excluded, report, result, frame_key(valid))
 
 
+def fkey(name: str) -> str:
+    """Versioned widget key for a filter. Bumping the version gives Streamlit brand-new widgets with
+    default values; popping the old keys alone leaves stale selections in the browser."""
+    return f"{name}__v{st.session_state.get('_filter_version', 0)}"
+
+
+def reset_filters() -> None:
+    for k in FILTER_KEYS:
+        st.session_state.pop(fkey(k), None)
+    st.session_state["_filter_version"] = st.session_state.get("_filter_version", 0) + 1
+
+
 def set_active(ds: ActiveDataset) -> None:
     st.session_state["dataset"] = ds
-    for k in FILTER_KEYS:
-        st.session_state.pop(k, None)
+    reset_filters()
 
 
 def active() -> ActiveDataset:
@@ -106,21 +117,20 @@ def render_filters(ds: ActiveDataset) -> None:
                             ("f_semester", "semester", "Semester")):
         opts = _options(reviews[col])
         if opts:
-            sb.multiselect(label, opts, key=key, placeholder="All")
-    sb.multiselect("Predicted sentiment", ["positive", "neutral", "negative"], key="f_sentiment", placeholder="All")
+            sb.multiselect(label, opts, key=fkey(key), placeholder="All")
+    sb.multiselect("Predicted sentiment", ["positive", "neutral", "negative"], key=fkey("f_sentiment"), placeholder="All")
     aspects = [a.label for a in get_analyzer().taxonomy.aspects]
-    sb.multiselect("Mentions aspect", aspects + ["(no aspect detected)"], key="f_aspect", placeholder="Any")
-    sb.radio("Prediction confidence", ["All", "Confident only", "Review needed only"], key="f_confidence", horizontal=False)
+    sb.multiselect("Mentions aspect", aspects + ["(no aspect detected)"], key=fkey("f_aspect"), placeholder="Any")
+    sb.radio("Prediction confidence", ["All", "Confident only", "Review needed only"], key=fkey("f_confidence"), horizontal=False)
     dated = reviews["date"].dropna()
+    narrowed_dates = False
     if len(dated) >= 2 and dated.min().date() != dated.max().date():
         lo, hi = dated.min().date(), dated.max().date()
-        sb.date_input("Date range", value=(lo, hi), min_value=lo, max_value=hi, key="f_dates")
-    if any(st.session_state.get(k) for k in FILTER_KEYS if k not in ("f_confidence", "f_dates")) or \
-            st.session_state.get("f_confidence", "All") != "All":
-        if sb.button("Clear filters", width="stretch"):
-            for k in FILTER_KEYS:
-                st.session_state.pop(k, None)
-            st.rerun()
+        sel = sb.date_input("Date range", value=(lo, hi), min_value=lo, max_value=hi, key=fkey("f_dates"))
+        narrowed_dates = isinstance(sel, (tuple, list)) and tuple(sel) != (lo, hi)
+    chosen = any(st.session_state.get(fkey(k)) for k in ("f_course", "f_instructor", "f_semester", "f_sentiment", "f_aspect"))
+    if chosen or narrowed_dates or st.session_state.get(fkey("f_confidence"), "All") != "All":
+        sb.button("Clear filters", width="stretch", on_click=reset_filters)
 
 
 def filtered(ds: ActiveDataset) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -129,13 +139,13 @@ def filtered(ds: ActiveDataset) -> tuple[pd.DataFrame, pd.DataFrame]:
     m = ds.result.mentions
     mask = pd.Series(True, index=r.index)
     for key, col in (("f_course", "course"), ("f_instructor", "instructor"), ("f_semester", "semester")):
-        sel = st.session_state.get(key)
+        sel = st.session_state.get(fkey(key))
         if sel:
             mask &= r[col].astype(str).isin(sel)
-    sel = st.session_state.get("f_sentiment")
+    sel = st.session_state.get(fkey("f_sentiment"))
     if sel:
         mask &= r["sentiment"].isin(sel)
-    sel = st.session_state.get("f_aspect")
+    sel = st.session_state.get(fkey("f_aspect"))
     if sel:
         want_none = "(no aspect detected)" in sel
         labels = [s for s in sel if s != "(no aspect detected)"]
@@ -144,12 +154,12 @@ def filtered(ds: ActiveDataset) -> tuple[pd.DataFrame, pd.DataFrame]:
         if want_none:
             aspect_mask |= r["aspect_count"] == 0
         mask &= aspect_mask
-    conf = st.session_state.get("f_confidence", "All")
+    conf = st.session_state.get(fkey("f_confidence"), "All")
     if conf == "Confident only":
         mask &= ~r["review_needed"].astype(bool)
     elif conf == "Review needed only":
         mask &= r["review_needed"].astype(bool)
-    dates = st.session_state.get("f_dates")
+    dates = st.session_state.get(fkey("f_dates"))
     if isinstance(dates, (tuple, list)) and len(dates) == 2:
         lo, hi = pd.Timestamp(dates[0]), pd.Timestamp(dates[1]) + pd.Timedelta(days=1)
         mask &= r["date"].isna() | ((r["date"] >= lo) & (r["date"] < hi))

@@ -6,7 +6,6 @@ import plotly
 import sklearn
 import spacy
 import streamlit as st
-import streamlit.components.v1 as components
 
 from src.analytics.metrics import aspect_summary, generate_insights, overview_kpis
 from src.analytics.recommendations import build_recommendations
@@ -54,7 +53,7 @@ with tab_rep:
                              "text/csv", width="stretch")
         st.caption("PDF: open the HTML report in a browser and use Print → Save as PDF (a print stylesheet is included).")
         ui.section("Report preview", "The same HTML that the download contains.")
-        components.html(html_report, height=900, scrolling=True)
+        st.iframe(html_report, height=900)
 
 with tab_method:
     st.markdown(f"""

@@ -123,17 +123,33 @@ def test_every_page_renders(app, page):
 
 def test_sentiment_filter_updates_overview(app):
     total = len(app.session_state["dataset"].result.reviews)
-    app.multiselect(key="f_sentiment").set_value(["negative"]).run()
+    app.multiselect(key="f_sentiment__v0").set_value(["negative"]).run()
     assert not app.exception
     chips = " ".join(m.value for m in app.markdown)
     n_neg = int((app.session_state["dataset"].result.reviews["sentiment"] == "negative").sum())
     assert f"{n_neg} of {total} valid reviews" in chips
 
 
+def test_clear_filters_resets_widgets(app):
+    """Regression: clearing must reset the widgets too, not only the stored values, otherwise
+    stale selections are re-applied on the next interaction."""
+    total = len(app.session_state["dataset"].result.reviews)
+    app.multiselect(key="f_course__v0").set_value(["CS305 Machine Learning"]).run()
+    clear = [b for b in app.sidebar.button if b.label == "Clear filters"]
+    assert clear, "Clear filters button should appear once a filter is active"
+    clear[0].click().run()
+    assert not app.exception
+    assert app.multiselect(key="f_course__v1").value == []
+    app.multiselect(key="f_instructor__v1").set_value(["Instructor C"]).run()
+    chips = " ".join(m.value for m in app.markdown)
+    n = int((app.session_state["dataset"].result.reviews["instructor"] == "Instructor C").sum())
+    assert f"{n} of {total} valid reviews" in chips
+
+
 def test_filter_to_empty_selection_shows_empty_state(app):
-    app.multiselect(key="f_course").set_value(["CS201 Data Structures"]).run()
-    app.multiselect(key="f_semester").set_value(["Fall 2025"]).run()
-    app.multiselect(key="f_aspect").set_value(["(no aspect detected)"]).run()
+    app.multiselect(key="f_course__v0").set_value(["CS201 Data Structures"]).run()
+    app.multiselect(key="f_semester__v0").set_value(["Fall 2025"]).run()
+    app.multiselect(key="f_aspect__v0").set_value(["(no aspect detected)"]).run()
     assert not app.exception
     for page in PAGES:
         app.switch_page(page).run()
@@ -146,3 +162,6 @@ def test_single_review_analysis(app):
     app.button(key="fx_single_btn").click().run()
     assert not app.exception
     assert any("Predicted sentiment" in m.value for m in app.markdown)
+    aspects = next(d.value for d in app.dataframe if "clause sentiment" in d.value.columns)
+    assert aspects["aspect"].is_unique  # one row per aspect, most confident clause kept
+    assert {"Teaching clarity & explanation", "Assignments & workload"} <= set(aspects["aspect"])
