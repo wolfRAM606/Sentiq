@@ -5,7 +5,7 @@ import pandas as pd
 import streamlit as st
 
 from src.analytics.pipeline import analyze_reviews
-from src.config import MAX_ROWS, MAX_UPLOAD_MB
+from src.config import MAX_ROWS, MAX_UPLOAD_MB, ROOT
 from src.data.loader import DataLoadError, read_csv_bytes
 from src.data.schema_mapping import OPTIONAL_ROLES, ROLE_LABELS, guess_text_column, suggest_mapping
 from src.data.validation import ValidationError, prepare_dataset
@@ -103,6 +103,12 @@ with tab_explore:
 with tab_upload:
     st.markdown("Upload a CSV with one review per row. Column names are detected automatically and can be changed below. "
                 "Files are processed in memory and are not stored on disk.")
+    showcase = ROOT / "data" / "sample" / "sentiq_showcase_feedback.csv"
+    if showcase.exists():
+        st.download_button("Download a sample CSV to try (synthetic, 154 rows)", showcase.read_bytes(),
+                           file_name="sentiq_showcase_feedback.csv", mime="text/csv",
+                           help="Synthetic feedback written to exercise every feature: five courses, two terms, "
+                                "edge cases and invalid rows. Download it, then upload it below.")
     up = st.file_uploader("CSV file", type=["csv", "txt"], key="fx_upload", help=f"Maximum {MAX_UPLOAD_MB} MB.")
     b1, b2 = st.columns([1, 3])
     if ds.kind != "demo" and b1.button("Reset to demonstration data", width="stretch"):

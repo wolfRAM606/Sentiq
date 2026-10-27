@@ -1,0 +1,155 @@
+Response ID,Course,Instructor,Term,Submitted On,Rating,Student Feedback,Intended Sentiment
+S147,ML340 Machine Learning,Faculty B,Spring 2026,2026-03-19,4,<b>Honestly</b> the notes were <script>alert('hi')</script> useful.,positive
+S100,HS205 Professional Communication,Faculty D,Fall 2025,2025-12-02,5,Very engaging and interactive sessions; everyone got a chance to present.,positive
+S107,HS205 Professional Communication,Faculty D,Spring 2026,2026-04-01,3,"Group discussions were good, but grading for participation felt subjective.",neutral
+S057,ML340 Machine Learning,Faculty B,Spring 2026,2026-02-17,5,The knowledgeable instructor connected theory to practice in every lecture.,positive
+S004,DS201 Data Structures,Faculty A,Fall 2025,12/09/2025,5,Faculty A has excellent subject knowledge and answers every question with confidence.,positive
+S024,DS201 Data Structures,Faculty A,Spring 2026,2026-03-09,4,Interactive problem-solving sessions kept the whole class engaged.,positive
+S088,MA110 Linear Algebra,Faculty C,Fall 2025,2025-12-06,5,"Clear explanation of proofs, and the tutorials were very useful.",positive
+S081,MA110 Linear Algebra,Faculty C,Spring 2026,2026-04-18,5,Subject knowledge is outstanding and topics are connected beautifully.,positive
+S145,HS205 Professional Communication,Faculty D,Spring 2026,2026-03-11,3,The canteen food near the department is cheap and tasty.,neutral
+S090,MA110 Linear Algebra,Faculty C,Fall 2025,2025-10-31,4,Everything about the course was well organised.,positive
+S039,ML340 Machine Learning,Faculty B,Spring 2026,2026-02-21,2,The maths was not explained clearly; many steps were skipped.,negative
+S153,DS201 Data Structures,Faculty A,Fall 2025,2025-11-01,5,I really enjoyed the course overall and would recommend it to juniors.,positive
+S104,HS205 Professional Communication,Faculty D,Fall 2025,2025-11-13,4,Practical writing tasks like emails and proposals were useful for internships.,positive
+S064,ML340 Machine Learning,Faculty B,Fall 2025,2025-09-28,5,Clear explanation of gradient descent with an animation I still remember.,positive
+S154,ML340 Machine Learning,Faculty B,Spring 2026,2026-03-03,5,Hands on labs with real datasets were the best part of this course.,positive
+S130,EE150 Basic Electronics,Faculty E,Fall 2025,2025-10-23,2,Faculty E often comes late to class and we lose the first fifteen minutes.,negative
+S124,HS205 Professional Communication,Faculty D,Fall 2025,2025-10-10,3,"Useful course, but the readings could be shorter.",neutral
+S062,ML340 Machine Learning,Faculty B,Fall 2025,2025-11-19,5,"Brilliant teaching methodology: intuition first, then the maths.",positive
+S127,HS205 Professional Communication,Faculty D,Spring 2026,2026-03-23,5,Excellent communication course; I would recommend it to everyone.,positive
+S036,ML340 Machine Learning,Faculty B,Fall 2025,2025-11-15,5,Excellent subject knowledge; Faculty B is clearly up to date with current research.,positive
+S098,MA110 Linear Algebra,Faculty C,Fall 2025,2025-11-26,5,Concepts were never confusing because of the careful explanations.,positive
+S135,EE150 Basic Electronics,Faculty E,Spring 2026,2026-03-08,2,Hard to reach the instructor outside class; no response to messages.,negative
+S078,MA110 Linear Algebra,Faculty C,Fall 2025,2025-10-13,5,Great teaching methodology; the board derivations are easy to follow.,positive
+S043,ML340 Machine Learning,Faculty B,Spring 2026,2026-02-25,3,The slides are dense; sharing the reading list earlier would help.,neutral
+S129,HS205 Professional Communication,Faculty D,Spring 2026,2026-04-04,5,Café-style debate sessions were très engaging and the instructor encouraged everyone to speak.,positive
+S136,EE150 Basic Electronics,Faculty E,Fall 2025,2025-09-14,5,Clear explanation of Ohm's law with hands on breadboard practice.,positive
+S056,ML340 Machine Learning,Faculty B,Fall 2025,2025-09-26,2,Too many assignments and not enough feedback on any of them.,negative
+S027,DS201 Data Structures,Faculty A,Spring 2026,2026-03-31,5,Well organised course with a weekly plan that we could rely on.,positive
+S140,EE150 Basic Electronics,Faculty E,Fall 2025,2025-08-21,2,The instructor is rarely available for doubt clearing.,negative
+S051,ML340 Machine Learning,Faculty B,Spring 2026,2026-04-14,3,"Great content, but it really needs to be spread over two semesters.",neutral
+S122,HS205 Professional Communication,Faculty D,Fall 2025,2025-09-21,2,The study material is spread over three websites and an email thread.,negative
+S150,DS201 Data Structures,Faculty A,Spring 2026,2026-02-02,3,    ,
+S013,DS201 Data Structures,Faculty A,Fall 2025,2025-11-28,1,The grading rubric for the project changed after we submitted it.,negative
+S003,DS201 Data Structures,Faculty A,Fall 2025,2025-10-23,2,Marks for the lab test were inconsistent; two of us wrote the same answer and got different scores.,negative
+S071,MA110 Linear Algebra,Faculty C,Spring 2026,2026-03-07,2,The textbook is outdated and hard to follow.,negative
+S005,DS201 Data Structures,Faculty A,Fall 2025,2025-11-10,1,"Exam questions had nothing to do with what was taught in class, and the evaluation seemed biased.",negative
+S015,DS201 Data Structures,Faculty A,Fall 2025,2025-10-29,3,Recursion needed more time; the rest of the pace was fine.,neutral
+S048,ML340 Machine Learning,Faculty B,Fall 2025,2025-10-24,5,Office hours were very helpful and Faculty B always made time to discuss doubts.,positive
+S022,DS201 Data Structures,Faculty A,Spring 2026,2026-04-20,2,The final exam was much harder than the practice papers we were given.,negative
+S028,DS201 Data Structures,Faculty A,Spring 2026,2026-01-22,2,The lab room computers were too slow to run our programs properly.,negative
+S068,MA110 Linear Algebra,Faculty C,Fall 2025,2025-10-06,5,"Faculty C explains every concept clearly, with geometric intuition first.",positive
+S034,ML340 Machine Learning,Faculty B,Fall 2025,2025-08-21,2,The lectures move too fast and I could not follow the derivations.,negative
+S083,MA110 Linear Algebra,Faculty C,Spring 2026,2026-03-29,4,Weekly quizzes kept me consistent with studying.,positive
+S066,ML340 Machine Learning,Faculty B,Fall 2025,2025-12-06,5,Very knowledgeable and passionate about the subject.,positive
+S101,HS205 Professional Communication,Faculty D,Spring 2026,2026-01-18,4,Detailed feedback on every report helped me improve my writing.,positive
+S085,MA110 Linear Algebra,Faculty C,Spring 2026,2026-03-03,5,Overall a wonderful experience; I would take another course with this instructor.,positive
+S037,ML340 Machine Learning,Faculty B,Spring 2026,2026-03-15,2,Assignment instructions were confusing and the deadlines were unrealistic.,negative
+S030,DS201 Data Structures,Faculty A,Spring 2026,2026-02-17,4,The practice problems were directly relevant to interviews and internships.,positive
+S126,HS205 Professional Communication,Faculty D,Fall 2025,2025-09-28,1,Not helpful at all when we asked for clarification on the final report format.,negative
+S008,DS201 Data Structures,Faculty A,Fall 2025,next Monday,2,"We did not get feedback on our assignments for weeks, so we could not improve before the exam.",negative
+S055,ML340 Machine Learning,Faculty B,Spring 2026,2026-03-21,5,I learnt a lot; this course changed how I think about data.,positive
+S092,MA110 Linear Algebra,Faculty C,Fall 2025,2025-10-24,5,I liked how every new idea was explained clearly before the formal proof.,positive
+S073,MA110 Linear Algebra,Faculty C,Spring 2026,2026-03-04,4,The notes are well structured and easy to revise from.,positive
+S044,ML340 Machine Learning,Faculty B,Fall 2025,2025-10-04,5,Industry examples made every topic feel relevant to a real job.,positive
+S115,HS205 Professional Communication,Faculty D,Spring 2026,2026-04-02,3,"The workload was light, maybe too light to really practise writing.",neutral
+S031,DS201 Data Structures,Faculty A,Spring 2026,2026-04-26,3,It would help to have recorded lectures for revision.,neutral
+S033,DS201 Data Structures,Faculty A,Spring 2026,2026-03-10,5,Very knowledgeable and passionate about the subject.,positive
+S059,ML340 Machine Learning,Faculty B,Spring 2026,2026-01-30,5,Kaggle-style mini competitions made the practical work exciting.,positive
+S139,EE150 Basic Electronics,Faculty E,Spring 2026,2026-02-15,4,Lab assistants were helpful and patient.,positive
+S072,MA110 Linear Algebra,Faculty C,Fall 2025,2025-08-31,3,More applications of matrices in engineering would make it less theoretical.,neutral
+S060,ML340 Machine Learning,Faculty B,Fall 2025,2025-11-10,3,The course is demanding. Be ready to spend a lot of time on it.,neutral
+S023,DS201 Data Structures,Faculty A,Spring 2026,2026-03-28,5,Faculty A explains concepts clearly and always checks whether everyone is following.,positive
+S042,ML340 Machine Learning,Faculty B,Fall 2025,2025-09-21,2,There was no time to actually learn the material because of the constant assignments.,negative
+S045,ML340 Machine Learning,Faculty B,Spring 2026,2026-04-25,2,The instructor rushed through the syllabus and hardly took any questions.,negative
+S007,DS201 Data Structures,Faculty A,Fall 2025,2025-09-02,4,The coding assignments were challenging but they really helped me understand linked lists and hashing.,positive
+S010,DS201 Data Structures,Faculty A,Fall 2025,2025-11-07,four,Not fair that quiz marks counted even though half the class had network problems during the test.,negative
+S094,MA110 Linear Algebra,Faculty C,Fall 2025,2025-12-01,4,Fair grading and helpful comments on the homework.,positive
+S014,DS201 Data Structures,Faculty A,Fall 2025,2025-11-01,5,I really enjoyed the course overall and would recommend it to juniors.,positive
+S121,HS205 Professional Communication,Faculty D,Spring 2026,2026-03-22,5,Role plays and debates made every class interactive.,positive
+S049,ML340 Machine Learning,Faculty B,Spring 2026,2026-04-03,2,The deadlines overlapped with other courses and the workload became stressful.,negative
+S111,HS205 Professional Communication,Faculty D,Spring 2026,2026-03-14,3,The class was fine. I expected more on technical documentation tools.,neutral
+S138,EE150 Basic Electronics,Faculty E,Fall 2025,2025-12-04,3,Labs are good; lectures are average.,neutral
+S099,MA110 Linear Algebra,Faculty C,Spring 2026,2026-01-28,3,A solid course overall with room for more engaging activities.,neutral
+S149,DS201 Data Structures,Faculty A,Spring 2026,2026-02-02,3,,
+S151,DS201 Data Structures,Faculty A,Spring 2026,2026-02-02,3,10/10 !!!,
+S084,MA110 Linear Algebra,Faculty C,Fall 2025,2025-10-21,2,Faculty C is not very responsive on email outside class hours.,negative
+S040,ML340 Machine Learning,Faculty B,Fall 2025,2025-09-15,3,"Interesting content, but the pace is very fast for students without a statistics background.",neutral
+S087,MA110 Linear Algebra,Faculty C,Spring 2026,2026-02-14,2,Dull sessions with no student participation at all.,negative
+S091,MA110 Linear Algebra,Faculty C,Spring 2026,2026-03-14,3,The material is fine but could use more visual explanations.,neutral
+S021,DS201 Data Structures,Faculty A,Spring 2026,2026-04-18,5,Graph algorithms finally made sense thanks to the visual demonstrations in class.,positive
+S054,ML340 Machine Learning,Faculty B,Fall 2025,2025-10-30,3,Recorded videos would help students who struggle with the pace.,neutral
+S114,HS205 Professional Communication,Faculty D,Fall 2025,2025-09-04,4,Faculty D is punctual and always well prepared.,positive
+S038,ML340 Machine Learning,Faculty B,Fall 2025,2025-11-14,5,The real world case studies on recommendation systems were fascinating.,positive
+S065,ML340 Machine Learning,Faculty B,Spring 2026,2026-01-15,2,Workload is heavy and the pace does not slow down even before exams.,negative
+S077,MA110 Linear Algebra,Faculty C,Spring 2026,2026-01-26,2,Classes feel boring because there is no discussion or interaction.,negative
+S133,EE150 Basic Electronics,Faculty E,Spring 2026,2026-04-25,2,Office hours were cancelled most weeks without notice.,negative
+S076,MA110 Linear Algebra,Faculty C,Fall 2025,2025-10-22,4,The exams were fair and matched the practice problems.,positive
+S061,ML340 Machine Learning,Faculty B,Spring 2026,2026-04-12,2,The project requirements were vague and changed twice during the term.,negative
+S029,DS201 Data Structures,Faculty A,Spring 2026,2026-01-26,5,Best teacher I have had so far in the department.,positive
+S105,HS205 Professional Communication,Faculty D,Spring 2026,2026-01-25,2,Assignment requirements were unclear and the instructions changed twice.,negative
+S018,DS201 Data Structures,Faculty A,Spring 2026,2026-04-21,5,"Detailed feedback on every assignment within a week, which helped a lot before the exams.",positive
+S089,MA110 Linear Algebra,Faculty C,Spring 2026,2026-03-06,2,The handouts are photocopies from years ago with missing pages.,negative
+S063,ML340 Machine Learning,Faculty B,Spring 2026,2026-03-26,2,Never enough time in class to ask questions.,negative
+S074,MA110 Linear Algebra,Faculty C,Fall 2025,2025-11-02,2,Lectures are monotonous; it is just derivations on the board for two hours.,negative
+S117,HS205 Professional Communication,Faculty D,Spring 2026,2026-03-11,2,Lecture slides were not uploaded after class even though we asked several times.,negative
+S103,HS205 Professional Communication,Faculty D,Spring 2026,2026-03-19,3,Some slides were helpful but the reading was too long for one week.,neutral
+S041,ML340 Machine Learning,Faculty B,Spring 2026,2026-03-03,5,Hands on labs with real datasets were the best part of this course.,positive
+S119,HS205 Professional Communication,Faculty D,Spring 2026,2026-03-13,3,I could not attend some sessions; recordings would have helped.,neutral
+S020,DS201 Data Structures,Faculty A,Spring 2026,2026-03-15,3,"The workload is reasonable, though the last assignment overlapped with other deadlines.",neutral
+S046,ML340 Machine Learning,Faculty B,Fall 2025,2025-10-07,3,"The group project was a good idea, but the groups were too large.",neutral
+S146,EE150 Basic Electronics,Faculty E,Fall 2025,2025-11-30,3,Parking near the building is always full.,neutral
+S106,HS205 Professional Communication,Faculty D,Fall 2025,2025-11-19,5,Friendly and supportive instructor who motivates us to speak confidently.,positive
+S086,MA110 Linear Algebra,Faculty C,Fall 2025,2025-10-26,3,The lectures were clear but the assignments were sometimes longer than expected.,neutral
+S035,ML340 Machine Learning,Faculty B,Spring 2026,2026-04-26,1,Way too much workload: three assignments and a project were due in the same week.,negative
+S137,EE150 Basic Electronics,Faculty E,Spring 2026,2026-02-18,2,"Not punctual, and the class often ends early too.",negative
+S097,MA110 Linear Algebra,Faculty C,Spring 2026,2026-02-09,2,The course materials are scattered and outdated.,negative
+S006,DS201 Data Structures,Faculty A,Fall 2025,Sept 14 2025,3,Please upload the lecture notes before class so we can follow along.,neutral
+S080,MA110 Linear Algebra,Faculty C,Fall 2025,2025-11-30,3,Average course. The content was standard and nothing stood out.,neutral
+S016,DS201 Data Structures,Faculty A,Fall 2025,2025-12-05,5,Very practical examples from real software projects showed where these structures are used.,positive
+S032,DS201 Data Structures,Faculty A,Spring 2026,2026-01-24,5,"Explanations were not confusing at all, even for difficult topics like dynamic programming.",positive
+S141,EE150 Basic Electronics,Faculty E,Spring 2026,2026-01-16,4,Practical sessions with real components were the highlight.,positive
+S102,HS205 Professional Communication,Faculty D,Fall 2025,2025-11-18,2,The course materials were scattered across different platforms and hard to find.,negative
+S079,MA110 Linear Algebra,Faculty C,Spring 2026,2026-03-17,2,The reference books recommended are old and do not match the syllabus.,negative
+S011,DS201 Data Structures,Faculty A,Fall 2025,2025-10-30,3,The course covers the standard syllabus; nothing special but nothing missing.,neutral
+S108,HS205 Professional Communication,Faculty D,Fall 2025,2025-10-13,4,Well organised course with a clear weekly plan.,positive
+S070,MA110 Linear Algebra,Faculty C,Fall 2025,2025-10-18,4,The pace is comfortable and the instructor checks that everyone is following.,positive
+S144,MA110 Linear Algebra,Faculty C,Fall 2025,2025-11-04,3,The campus wifi is fast and reliable.,neutral
+S134,EE150 Basic Electronics,Faculty E,Fall 2025,2025-10-10,3,The circuits content is fine but the classes start late.,neutral
+S001,DS201 Data Structures,Faculty A,Fall 2025,2025-09-04,5,"The explanations of trees and heaps were very clear, and the worked examples made each concept easy to understand.",positive
+S012,DS201 Data Structures,Faculty A,Fall 2025,2025-10-12,"4,5",Lab sessions were useful and the teaching assistants were supportive.,positive
+S002,DS201 Data Structures,Faculty A,Fall 2025,2025-09-29,2,"The marking scheme for the midterm was never shared, and the grading felt unfair compared to other sections.",negative
+S142,DS201 Data Structures,Faculty A,Fall 2025,2025-09-08,4,He is a great teacher.,positive
+S058,ML340 Machine Learning,Faculty B,Fall 2025,2025-10-17,2,Lectures are too fast and the examples are too advanced for beginners.,negative
+S019,DS201 Data Structures,Faculty A,Spring 2026,2026-04-20,5,"Clear explanations, patient answers in office hours, and fair exams. Great course.",positive
+S053,ML340 Machine Learning,Faculty B,Spring 2026,2026-01-23,4,Grading was transparent and the rubric came with every assignment.,positive
+S110,HS205 Professional Communication,Faculty D,Fall 2025,2025-09-07,5,The mock interviews were very relevant to real life job applications.,positive
+S096,MA110 Linear Algebra,Faculty C,Fall 2025,2025-11-01,5,The best maths teacher I have had at university.,positive
+S050,ML340 Machine Learning,Faculty B,Fall 2025,2025-08-29,5,Engaging lectures with live coding demos; I never felt bored.,positive
+S025,DS201 Data Structures,Faculty A,Spring 2026,2026-02-11,3,"Some slides had small errors, but the instructor corrected them quickly.",neutral
+S095,MA110 Linear Algebra,Faculty C,Spring 2026,2026-01-15,3,"Interesting subject, though the textbook is not great.",neutral
+S148,ML340 Machine Learning,Faculty B,Fall 2025,2025-10-21,3,"I want to give detailed feedback because this course mattered to me. The lectures were clear when the instructor slowed down, the labs were the best part of the week, and the case studies connected the theory to real problems. However, the pace in the second half was too fast, the assignments piled up at the same time as other courses, and I often felt there was no time to ask questions. With a lighter schedule and earlier release of the reading list, this would be one of the best courses in the programme. I want to give detailed feedback because this course mattered to me. The lectures were clear when the instructor slowed down, the labs were the best part of the week, and the case studies connected the theory to real problems. However, the pace in the second half was too fast, the assignments piled up at the same time as other courses, and I often felt there was no time to ask questions. With a lighter schedule and earlier release of the reading list, this would be one of the best courses in the programme. I want to give detailed feedback because this course mattered to me. The lectures were clear when the instructor slowed down, the labs were the best part of the week, and the case studies connected the theory to real problems. However, the pace in the second half was too fast, the assignments piled up at the same time as other courses, and I often felt there was no time to ask questions. With a lighter schedule and earlier release of the reading list, this would be one of the best courses in the programme. I want to give detailed feedback because this course mattered to me. The lectures were clear when the instructor slowed down, the labs were the best part of the week, and the case studies connected the theory to real problems. However, the pace in the second half was too fast, the assignments piled up at the same time as other courses, and I often felt there was no time to ask questions. With a lighter schedule and earlier release of the reading list, this would be one of the best courses in the programme. I want to give detailed feedback because this course mattered to me. The lectures were clear when the instructor slowed down, the labs were the best part of the week, and the case studies connected the theory to real problems. However, the pace in the second half was too fast, the assignments piled up at the same time as other courses, and I often felt there was no time to ask questions. With a lighter schedule and earlier release of the reading list, this would be one of the best courses in the programme. I want to give detailed feedback because this course mattered to me. The lectures were clear when the instructor slowed down, the labs were the best part of the week, and the case studies connected the theory to real problems. However, the pace in the second half was too fast, the assignments piled up at the same time as other courses, and I often felt there was no time to ask questions. With a lighter schedule and earlier release of the reading list, this would be one of the best courses in the programme. I want to give detailed feedback because this course mattered to me. The lectures were clear when the instructor slowed down, the labs were the best part of the week, and the case studies connected the theory to real problems. However, the pace in the second half was too fast, the assignments piled up at the same time as other courses, and I often felt there was no time to ask questions. With a lighter schedule and earlier release of the reading list, this would be one of the best courses in the programme. I want to give detailed feedback because this course mattered to me. The lectures were clear when the instructor slowed down, the labs were the best part of the week, and the case studies connected the theory to real problems. However, the pace in the second half was too fast, the assignments piled up at the same time as other courses, and I often felt there was no time to ask questions. With a lighter schedule and earlier release of the reading list, this would be one of the best courses in the programme. I want to give detailed feedback because this course mattered to me. The lectures were clear when the instructor slowed down, the labs were the best part of the week, and the case studies connected the theory to real problems. However, the pace in the second half was too fast, the assignments piled up at the same time as other courses, and I often felt there was no time to ask questions. With a lighter schedule and earlier release of the reading list, this would be one of the best courses in the programme. I want to give detailed feedback because this course mattered to me. The lectures were clear when the instructor slowed down, the labs were the best part of the week, and the case studies connected the theory to real problems. However, the pace in the second half was too fast, the assignments piled up at the same time as other courses, and I often felt there was no time to ask questions. With a lighter schedule and earlier release of the reading list, this would be one of the best courses in the programme. I want to give detailed feedback because this course mattered to me. The lectures were clear when the instructor slowed down, the labs were the best part of the week, and the case studies connected the theory to real problems. However, the pace in the second half was too fast, the assignments piled up at the same time as other courses, and I often felt there was no time to ask questions. With a lighter schedule and earlier release of the reading list, this would be one of the best courses in the programme. I want to give detailed feedback because this course mattered to me. The lectures were clear when the instructor slowed down, the labs were the best part of the week, and the case studies connected the theory to real problems. However, the pace in the second half was too fast, the assignments piled up at the same time as other courses, and I often felt there was no time to ask questions. With a lighter schedule and earlier release of the reading list, this would be one of the best courses in the programme. I want to give detailed feedback because this course mattered to me. The lectures were clear when the instructor slowed down, the labs were the best part of the week, and the case studies connected the theory to real problems. However, the pace in the second half was too fast, the assignments piled up at the same time as other courses, and I often felt there was no time to ask questions. With a lighter schedule and earlier release of the reading list, this would be one of the best courses in the programme.",neutral
+S069,MA110 Linear Algebra,Faculty C,Spring 2026,2026-02-27,5,Very clear explanations; I finally understand eigenvectors.,positive
+S017,DS201 Data Structures,Faculty A,Spring 2026,2026-04-15,5,This term the marking criteria were shared in advance and grading felt fair and transparent.,positive
+S123,HS205 Professional Communication,Faculty D,Spring 2026,2026-03-24,5,Encouraging feedback that never made anyone feel embarrassed.,positive
+S109,HS205 Professional Communication,Faculty D,Spring 2026,2026-03-13,2,The resources shared were outdated and some links did not work.,negative
+S047,ML340 Machine Learning,Faculty B,Spring 2026,2026-04-17,2,I did not understand neural networks at all because the explanation was rushed.,negative
+S116,HS205 Professional Communication,Faculty D,Fall 2025,2025-11-17,4,Peer review activities made me more engaged with my classmates' work.,positive
+S152,DS201 Data Structures,Faculty A,Spring 2026,2026-02-02,3,5,
+S132,EE150 Basic Electronics,Faculty E,Fall 2025,2025-10-20,4,The lab experiments were practical and well planned.,positive
+S113,HS205 Professional Communication,Faculty D,Spring 2026,2026-04-30,2,"The presentation rubric was not shared in advance, so the marks felt arbitrary.",negative
+S026,DS201 Data Structures,Faculty A,Spring 2026,2026-01-12,4,The rubric was clear and the marks matched the effort we put in.,positive
+S118,HS205 Professional Communication,Faculty D,Fall 2025,2025-11-14,4,A good balance between theory and practical exercises.,positive
+S082,MA110 Linear Algebra,Faculty C,Fall 2025,2025-12-08,2,Not enough practical examples; I still do not know where we use determinants.,negative
+S075,MA110 Linear Algebra,Faculty C,Spring 2026,2026-03-23,5,"Patient and kind, always ready to answer questions after class.",positive
+S009,DS201 Data Structures,Faculty A,Fall 2025,2025-11-04,5,Step by step walkthroughs of sorting algorithms on the board were the best part of the course.,positive
+S143,ML340 Machine Learning,Faculty B,Spring 2026,2026-04-05,3,Fair enough.,neutral
+S112,HS205 Professional Communication,Faculty D,Fall 2025,2025-09-18,5,One of the most enjoyable classes; discussions were always lively.,positive
+S128,HS205 Professional Communication,Faculty D,Fall 2025,2025-11-30,3,"Good class discussions, average course materials.",neutral
+S131,EE150 Basic Electronics,Faculty E,Spring 2026,2026-04-11,1,"Emails are never answered, even before the exam.",negative
+S120,HS205 Professional Communication,Faculty D,Fall 2025,2025-11-19,2,"The assignment brief was vague, and we lost marks for things that were never mentioned.",negative
+S125,HS205 Professional Communication,Faculty D,Spring 2026,2026-04-07,5,I gained real confidence in public speaking.,positive
+S067,ML340 Machine Learning,Faculty B,Spring 2026,2026-04-12,3,"Mixed feelings: brilliant content, exhausting schedule.",neutral
+S052,ML340 Machine Learning,Faculty B,Fall 2025,2025-10-02,1,The class goes so fast that most of us gave up taking notes.,negative
+S093,MA110 Linear Algebra,Faculty C,Spring 2026,2026-03-19,2,I struggled to stay awake; the lectures need more interaction.,negative
