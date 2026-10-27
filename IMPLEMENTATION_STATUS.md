@@ -12,6 +12,7 @@
 | 4 Core analytics | ✅ Done | Aspects (12, clause-level), keywords, noun phrases, NMF topics, indicator, recommendations |
 | 5 Interface | ✅ Done | Midnight Intelligence theme; 7 pages inspected in the in-app browser; defects fixed |
 | 6 Exports & docs | ✅ Done | CSV / Markdown / HTML exports; README, methodology, architecture, provenance, viva guide, changelog |
+| 7b Full browser test pass | ✅ Done | 113-check plan (`docs/TEST_PLAN.md`) run against the live app; 5 defects found and fixed; results in `docs/TEST_RESULTS.md`. Frozen as tag `v1.0-streamlit` / branch `release/v1-streamlit` |
 | 7 Testing & hardening | ✅ Done | 62 pytest tests passing; upload → analysis tested in the browser; small-data states checked; clean-venv install verified (see below) |
 | 8 Delivery | ⚠️ Partial | All work committed on `main` and **pushed** to https://github.com/wolfRAM606/Sentiq (2026-10-27). **Not deployed** to Streamlit Cloud |
 
@@ -23,7 +24,7 @@
 
 ## Verification performed
 
-* `python -m pytest -q` → **62 passed** (data, NLP, model, analytics/export, and Streamlit AppTest for all 7 pages,
+* `python -m pytest -q` → **70 passed** (was 62 before the full test pass added regression tests) (data, NLP, model, analytics/export, and Streamlit AppTest for all 7 pages,
   filters, empty selections and single-review analysis).
 * App launched locally (`streamlit run app.py`). All 7 pages rendered in the in-app browser with no exceptions and
   no server warnings.

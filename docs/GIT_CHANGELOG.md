@@ -56,6 +56,19 @@ for its hash) contains:
 `requirements.txt`. The clean-environment server started and returned `/_stcore/health` → ok.
 **Pushed:** no (no remote configured).
 
+## Milestone 4: full test pass and v1 freeze (2026-10-27)
+
+| Commit | Message | Material changes | Why |
+|---|---|---|---|
+| `87cf6ce` | chore: tidy .gitignore and generalise the no-API-key test | `.gitignore`, `tests/test_app.py` | Housekeeping |
+| `a9b349e` | docs: update changelog hashes after commit-message rewrite | this file | Hashes changed when commit messages were edited |
+| `801b034` | fix: defects found in full browser test pass | `src/data/loader.py`, `src/ui/state.py`, `src/analytics/metrics.py`, `pages/2…`, `pages/7…`, tests | Duplicate headers accepted; filters not really cleared; duplicated single-review aspect rows; deprecated preview API; plural wording |
+| `f3d3295` | test: add full test plan, results, fixtures script and table-content checks | `docs/TEST_PLAN.md`, `docs/TEST_RESULTS.md`, `scripts/make_test_fixtures.py`, `tests/test_ui_tables.py` | 113-check plan run in the browser |
+
+**Tests:** 70 passed. Browser test pass recorded in `docs/TEST_RESULTS.md`.
+**Frozen as v1:** tag `v1.0-streamlit` and branch `release/v1-streamlit` point at the commit that adds this section.
+Use either to roll back to the tested Streamlit version.
+
 ## Push status
 
 | Date | Remote | Branch | Result |
